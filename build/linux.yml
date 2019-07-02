@@ -1,0 +1,38 @@
+parameters:
+  target: ''
+  gcc_version: ''
+  rust_version: 'nightly'
+
+steps:
+- script: |
+    set -ex
+
+    REPO=$(node -p "require('./config.json').ripgrepRepo")
+    TREEISH=$(node -p "require('./config.json').ripgrepTag")
+    git clone https://github.com/${REPO}.git
+    cd ripgrep
+    git checkout $TREEISH
+  displayName: Clone Ripgrep
+- script: build/install.sh
+  displayName: Install Rust
+  env:
+    RUST_VERSION: ${{ parameters.rust_version }}
+    TARGET: ${{ parameters.target }}
+    GCC_VERSION: ${{ parameters.gcc_version }}
+- script: ../build/build.sh
+  displayName: Build
+  workingDirectory: ripgrep
+  env:
+    TARGET: ${{ parameters.target }}
+- script: ../build/package.sh
+  displayName: Package
+  workingDirectory: ripgrep
+  env:
+    TARGET: ${{ parameters.target }}
+    OUT_DIR: $(Build.ArtifactStagingDirectory)
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    artifactName: $(Name)
+    targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
