@@ -36,3 +36,4 @@ steps:
   inputs:
     artifactName: $(Name)
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
