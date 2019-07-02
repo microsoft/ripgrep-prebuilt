@@ -66,9 +66,9 @@ jobs:
     - template: publish.yml
 
 trigger:
-  #branches:
-  #  include:
-  #  - az-pipelines
+  branches:
+   include:
+   - az-pipelines
   tags:
     include:
     - v*
