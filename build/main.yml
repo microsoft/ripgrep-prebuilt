@@ -68,7 +68,7 @@ jobs:
 trigger:
   branches:
    include:
-   - az-pipelines
+   - master
   tags:
     include:
     - v*
