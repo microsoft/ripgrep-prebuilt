@@ -1,16 +1,15 @@
 #!/bin/bash
 
+set -ex
+
 cd ~
-echo "git clone https://github.com/roblourens/ripgrep.git"
-git clone https://github.com/roblourens/ripgrep.git
-echo "cd ripgrep/"
-cd ripgrep/
-echo "cargo build --release --target=powerpc64le-unknown-linux-gnu --features 'pcre2'"
+REPO=$(node -p "require('./config.json').ripgrepRepo")
+TREEISH=$(node -p "require('./config.json').ripgrepTag")
+git clone https://github.com/${REPO}.git
+cd ripgrep
+git checkout $TREEISH
 cargo build --release --target=powerpc64le-unknown-linux-gnu --features 'pcre2'
-echo "strip ./target/powerpc64le-unknown-linux-gnu/release/rg"
 strip ./target/powerpc64le-unknown-linux-gnu/release/rg
-echo "zip -j "ripgrep-linux-ppc64le.zip" ./target/powerpc64le-unknown-linux-gnu/release/rg"
 zip -j "ripgrep-linux-ppc64le.zip" ./target/powerpc64le-unknown-linux-gnu/release/rg
-echo "target/powerpc64le-unknown-linux-gnu/release/rg --version"
 target/powerpc64le-unknown-linux-gnu/release/rg --version
 
