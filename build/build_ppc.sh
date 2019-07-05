@@ -1,16 +1,18 @@
 #!/bin/bash
 
-cd ~
-echo "git clone https://github.com/roblourens/ripgrep.git"
-git clone https://github.com/roblourens/ripgrep.git
-echo "cd ripgrep/"
-cd ripgrep/
-echo "cargo build --release --target=powerpc64le-unknown-linux-gnu --features 'pcre2'"
-cargo build --release --target=powerpc64le-unknown-linux-gnu --features 'pcre2'
-echo "strip ./target/powerpc64le-unknown-linux-gnu/release/rg"
-strip ./target/powerpc64le-unknown-linux-gnu/release/rg
-echo "zip -j "ripgrep-linux-ppc64le.zip" ./target/powerpc64le-unknown-linux-gnu/release/rg"
-zip -j "ripgrep-linux-ppc64le.zip" ./target/powerpc64le-unknown-linux-gnu/release/rg
-echo "target/powerpc64le-unknown-linux-gnu/release/rg --version"
-target/powerpc64le-unknown-linux-gnu/release/rg --version
+set -ex
 
+REPO=$(node -p "require('./config.json').ripgrepRepo")
+TREEISH=$(node -p "require('./config.json').ripgrepTag")
+THIS_TAG=`git tag -l --contains HEAD`
+
+cd ~
+git clone https://github.com/${REPO}.git
+cd ripgrep
+git checkout $TREEISH
+
+TARGET="powerpc64le-unknown-linux-gnu"
+cargo build --release --target=$TARGET --features 'pcre2'
+strip ./target/${TARGET}/release/rg
+zip -j "ripgrep-${THIS_TAG}-${TARGET}.zip" ./target/${TARGET}/release/rg
+target/${TARGET}/release/rg --version

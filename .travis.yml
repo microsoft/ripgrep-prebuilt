@@ -1,0 +1,19 @@
+language: bash
+os: linux-ppc64le
+addons:
+  apt:
+    packages:
+    - zip
+    - cargo
+rust: nightly
+script:
+- sh ./build/build_ppc.sh
+deploy:
+  provider: releases
+  file_glob: true
+  api_key:
+    secure: e0/PfGa6XKuMBkqlymKrHY0W/vfzmu0LA8e2qz7mpS7whTCGhEKKgxYS+XIe5NUImOb3A/HZbSs1g8IalUvYBmQSDe2qs3QzZUA6JPb/L/dtxbQ1ZMST2jLAz30juQ1cgq1gYPBf/IeABqd9fwiGmqox1lHzeIyTrZMe3sOK5L35vhKLXMW7llQ1VMuWk7yVfRLOVfhdiKb67V5JhL8lwz/CfCwN+4uZUKUFC5Kl3Yu+KVcnb76HVYZhByTbgj/tPi/vEuCc55Afsau77Evja0e4S4iJohGVs+LRpgM3uWw6WZo6Oy8Rz8CAN3cZkmWchGSU+FnQLeM8vhp4ctq6J47soMdysozZizikQDABsT1LGgkNmM+j4zY6dztSW/64KkUJLfuJQEwcYtkKXonn84EklM963dbokbHpOtKhpwF2kclfuk+NImQR40u0y/QBYBVxcnW9PgIv1yWzuQ7v2r63d3ZgsyxzzkvHlNEZzPHPFJMOE2y2AhXHCn/7Snx6bysxXsW43syr1JdSgLyDz4ncWovxzt0wStiInraWRf0ihnUyQ5535xAPhzP8Jhv48bFu/Ol1SSABCV1RznLuMqV+/F3GPCUGqtqyvIL7GiDZCgZyHK3jZto6LyoLNg/Naes6H8crIT+wfVoZs3nsJG3PMvHNnxgtBZmUKIBWhq4=
+  file: "/home/travis/ripgrep/*.zip"
+  on:
+    repo: microsoft/ripgrep-prebuilt
+    tags: true
