@@ -5,19 +5,14 @@ addons:
     packages:
     - zip
     - cargo
-
 rust: nightly
-
 script:
 - sh ./build/build_ppc.sh
-
 deploy:
   provider: releases
   api_key:
-    secure: GdSVWhK+VhLy3PJVQIqHicMpmOuyt9vyHfG0fmSpa+hpvEoMDupW9ueyxM5d1DeakjoVpZPIVs12ShC2SD6AX5fGeZPQsKxONd5JETLRnhUametPfpvITuMsfuz0LUuEDVcenUZzyCs0eWJQGEkfsPfH6D46iUjn6uKTHjBwYuxC9wfRp3cjGDXoJNApWJdLOFclZFpMUcLu1Tk2q4Q2jLCYXxPjvV1nZnNeJjSK15UjLYGW5XrwtkI2wgS1p5O4lQy44pbbY3Q7dmKM1Nl0JedDwovf4inL+pjIj+6+SnbmZzhL2AvHxXRCb/thJ+L+Y7dMWRWLFPfnQ8PwgPIOXD+v/k3fNDSl8pIn3ITYBWiQYp4fi10WNtoKzvLnoyCWCuoiGNuhjGxSthFXJnUkYa2Bp6jpUw8pxodeFFECKHqftgi7f7+iL9dfYBNgqhJgs42He7/Gx+vPphlkTTm7PD61dtLyL997pJXaWpBHTX0m0/SQX7Wp61bVsEKyU8OWI8s3fP6G9hixihDDTmQMJgmz3he70cp08UgPNaD4wyeNQAnKZPTp5URMBb+lCpsEnrNcCmSRX9lPA9VGSpvqY0tdxUQiP+Oy8gR3N6aSSc/TM8hcnhpTZl801GyNAECenPWtGDeYXY72EsqYpd5INTSwqyZzvcaU0DlfWOeYVkw=
+    secure: e0/PfGa6XKuMBkqlymKrHY0W/vfzmu0LA8e2qz7mpS7whTCGhEKKgxYS+XIe5NUImOb3A/HZbSs1g8IalUvYBmQSDe2qs3QzZUA6JPb/L/dtxbQ1ZMST2jLAz30juQ1cgq1gYPBf/IeABqd9fwiGmqox1lHzeIyTrZMe3sOK5L35vhKLXMW7llQ1VMuWk7yVfRLOVfhdiKb67V5JhL8lwz/CfCwN+4uZUKUFC5Kl3Yu+KVcnb76HVYZhByTbgj/tPi/vEuCc55Afsau77Evja0e4S4iJohGVs+LRpgM3uWw6WZo6Oy8Rz8CAN3cZkmWchGSU+FnQLeM8vhp4ctq6J47soMdysozZizikQDABsT1LGgkNmM+j4zY6dztSW/64KkUJLfuJQEwcYtkKXonn84EklM963dbokbHpOtKhpwF2kclfuk+NImQR40u0y/QBYBVxcnW9PgIv1yWzuQ7v2r63d3ZgsyxzzkvHlNEZzPHPFJMOE2y2AhXHCn/7Snx6bysxXsW43syr1JdSgLyDz4ncWovxzt0wStiInraWRf0ihnUyQ5535xAPhzP8Jhv48bFu/Ol1SSABCV1RznLuMqV+/F3GPCUGqtqyvIL7GiDZCgZyHK3jZto6LyoLNg/Naes6H8crIT+wfVoZs3nsJG3PMvHNnxgtBZmUKIBWhq4=
   file: "/home/travis/ripgrep/ripgrep-linux-ppc64le.zip"
-  skip_cleanup: true
-  draft: true
   on:
-    tags: true
     repo: microsoft/ripgrep-prebuilt
+    branch: ppc
