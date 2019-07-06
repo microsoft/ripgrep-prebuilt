@@ -9,7 +9,7 @@ addons:
 rust: nightly
 
 script:
-- sh build/run_ripgrep_build.sh
+- sh ./build/build_ppc.sh
 
 deploy:
   provider: releases
