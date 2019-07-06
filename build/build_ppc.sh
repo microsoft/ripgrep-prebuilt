@@ -2,9 +2,10 @@
 
 set -ex
 
-cd ~
 REPO=$(node -p "require('./config.json').ripgrepRepo")
 TREEISH=$(node -p "require('./config.json').ripgrepTag")
+
+cd ~
 git clone https://github.com/${REPO}.git
 cd ripgrep
 git checkout $TREEISH
