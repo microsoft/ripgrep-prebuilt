@@ -35,7 +35,7 @@ steps:
     $env:RUSTFLAGS='-C target-feature=+crt-static -Z unstable-options'
     cargo build --release --target $env:TARGET --features pcre2
 
-    "$CARGO" test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
 
     pushd ..
     $this_tag=git tag -l --contains HEAD
