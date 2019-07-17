@@ -11,4 +11,5 @@ steps:
     tagSource: 'auto'
     tag: '$(Build.SourceBranchName)'
     assets: '$(System.ArtifactsDirectory)/**'
+    assetUploadMode: 'replace'
     addChangeLog: true
