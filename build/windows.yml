@@ -2,7 +2,7 @@
 
 parameters:
   target: ''
-  rust_version: 'nightly'
+  rust_version: 'stable'
 
 steps:
 - powershell: |
@@ -31,7 +31,7 @@ steps:
     reason: variables['Build.Reason']
   displayName: Install Rust
 - powershell: |
-    $env:RUSTFLAGS='-C target-feature=+crt-static -Z unstable-options'
+    $env:RUSTFLAGS='-C target-feature=+crt-static'
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'

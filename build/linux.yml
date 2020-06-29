@@ -1,7 +1,7 @@
 parameters:
   target: ''
   gcc_version: ''
-  rust_version: 'nightly'
+  rust_version: 'stable'
 
 steps:
 - script: |
