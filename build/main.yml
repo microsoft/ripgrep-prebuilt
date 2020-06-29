@@ -50,6 +50,13 @@ jobs:
     - template: windows.yml
       parameters:
         target: i686-pc-windows-msvc
+- job: win_arm64
+  pool:
+    vmImage: VS2017-Win2016
+  steps:
+    - template: windows.yml
+      parameters:
+        target: aarch64-pc-windows-msvc
 - job: publish
   pool:
     vmImage: 'ubuntu-16.04'

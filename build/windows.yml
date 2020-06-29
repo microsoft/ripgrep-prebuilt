@@ -2,7 +2,6 @@
 
 parameters:
   target: ''
-  gcc_version: ''
   rust_version: 'nightly'
 
 steps:
@@ -18,7 +17,7 @@ steps:
     echo $env:reason
     echo $BUILD_SOURCEVERSION
     Invoke-WebRequest https://win.rustup.rs -UseBasicParsing -OutFile rustup-init.exe
-    .\rustup-init.exe -y --default-host $env:TARGET
+    .\rustup-init.exe -y
     $env:PATH+=";C:\Users\appveyor\.cargo\bin"
 
     rustup default $env:RUST_VERSION
