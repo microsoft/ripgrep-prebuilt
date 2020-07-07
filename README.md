@@ -4,6 +4,10 @@
 
 Builds [ripgrep](https://github.com/BurntSushi/ripgrep) on Azure Pipelines for multiple platforms, used by VS Code.
 
+## Details
+
+Reads `config.json` to determine which repo to clone and which tag to check out. If the build was triggered by a tag, each job will package the build outputs and publish them as pipeline artifacts, and the last job will upload those artifacts to the Github release. The Github release is consumed by the [vscode-ripgrep](https://github.com/microsoft/vscode-ripgrep) NPM package.
+
 ## Contributing
 
 This project welcomes contributions and suggestions.  Most contributions require you to agree to a
