@@ -38,7 +38,7 @@ jobs:
         target: x86_64-apple-darwin
 - job: macOS_arm64
   pool:
-    name: Apple Silicon DTK
+    name: Apple_Silicon_DTK
   steps:
     - template: linux.yml
       parameters:
