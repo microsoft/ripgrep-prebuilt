@@ -36,6 +36,13 @@ jobs:
     - template: linux.yml
       parameters:
         target: x86_64-apple-darwin
+- job: macOS_arm64
+  pool:
+    name: Apple Silicon DTK
+  steps:
+    - template: linux.yml
+      parameters:
+        target: aarch64-apple-darwin
 - job: win_64
   pool:
     vmImage: VS2017-Win2016
