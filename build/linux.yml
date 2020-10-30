@@ -19,6 +19,10 @@ steps:
     RUST_VERSION: ${{ parameters.rust_version }}
     TARGET: ${{ parameters.target }}
     GCC_VERSION: ${{ parameters.gcc_version }}
+- script: |
+    sudo xcode-select -s /Applications/Xcode_12.2.app
+  displayName: Switch to Xcode 12
+  condition: eq('${{parameters.target}}', 'aarch64-apple-darwin')
 - script: ../build/build.sh
   displayName: Build
   workingDirectory: ripgrep

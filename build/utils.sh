@@ -32,6 +32,9 @@ architecture() {
         aarch64-unknown-linux-gnu)
             echo aarch64
             ;;
+        aarch64-apple-darwin)
+            echo arm64
+            ;;
         *)
             die "architecture: unexpected target $TARGET"
             ;;
@@ -83,6 +86,13 @@ is_arm() {
 is_aarch64() {
     case "$(architecture)" in
         aarch64) return 0 ;;
+        *)     return 1 ;;
+    esac
+}
+
+is_arm64() {
+    case "$(architecture)" in
+        arm64) return 0 ;;
         *)     return 1 ;;
     esac
 }
