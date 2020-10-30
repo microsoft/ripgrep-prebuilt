@@ -36,6 +36,16 @@ jobs:
     - template: linux.yml
       parameters:
         target: x86_64-apple-darwin
+- job: macOS_arm64
+  pool:
+    vmImage: macOS-latest
+  steps:
+    - template: linux.yml
+      parameters:
+        target: aarch64-apple-darwin
+        rust_version: nightly
+        repo: 'deepak1556/ripgrep'
+        tag: '12.1.2'
 - job: win_64
   pool:
     vmImage: VS2017-Win2016
@@ -67,6 +77,7 @@ jobs:
   - linux_arm
   - linux_aarch64
   - macOS
+  - macOS_arm64
   - win_64
   - win_32
   steps:
