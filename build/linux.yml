@@ -2,15 +2,16 @@ parameters:
   target: ''
   gcc_version: ''
   rust_version: 'stable'
-  repo: 'BurntSushi/ripgrep'
-  tag: '12.1.1'
 
 steps:
 - script: |
     set -ex
-    git clone https://github.com/${{ parameters.repo }}.git
+
+    REPO=$(node -p "require('./config.json').ripgrepRepo")
+    TREEISH=$(node -p "require('./config.json').ripgrepTag")
+    git clone https://github.com/${REPO}.git
     cd ripgrep
-    git checkout ${{ parameters.tag }}
+    git checkout $TREEISH
   displayName: Clone Ripgrep
 - script: build/install.sh
   displayName: Install Rust

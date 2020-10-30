@@ -44,8 +44,6 @@ jobs:
       parameters:
         target: aarch64-apple-darwin
         rust_version: nightly
-        repo: 'deepak1556/ripgrep'
-        tag: '12.1.2'
 - job: win_64
   pool:
     vmImage: VS2017-Win2016
