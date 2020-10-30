@@ -13,7 +13,7 @@ set -ex
 install_rustup() {
     if is_osx && is_arm64; then
         arch --x86_64 sh <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) \
-            --default-host "$TARGET" --default-toolchain "$RUST_VERSION"
+            -y --default-host "$TARGET" --default-toolchain "$RUST_VERSION"
     else
         curl https://sh.rustup.rs -sSf \
             | sh -s -- -y --default-toolchain="$RUST_VERSION"
