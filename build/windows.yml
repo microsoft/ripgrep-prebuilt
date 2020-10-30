@@ -3,15 +3,15 @@
 parameters:
   target: ''
   rust_version: 'stable'
+  repo: 'BurntSushi/ripgrep'
+  tag: '12.1.1'
 
 steps:
 - powershell: |
     gci env:*
-    $REPO=node -p "require('./config.json').ripgrepRepo"
-    $TREEISH=node -p "require('./config.json').ripgrepTag"
-    git clone https://github.com/${REPO}.git
+    git clone https://github.com/${{ parameters.repo }}.git
     cd ripgrep
-    git checkout $TREEISH
+    git checkout ${{ parameters.tag }}
   displayName: Clone ripgrep
 - powershell: |
     echo $env:reason
