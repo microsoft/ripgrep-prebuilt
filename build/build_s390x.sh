@@ -2,8 +2,8 @@
 
 set -ex
 
-REPO='BurntSushi/ripgrep'
-TREEISH='12.1.1'
+REPO=$(node -p "require('./config.json').ripgrepRepo")
+TREEISH=$(node -p "require('./config.json').ripgrepTag")
 THIS_TAG=`git tag -l --contains HEAD`
 
 cd ~
