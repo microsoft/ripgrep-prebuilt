@@ -80,6 +80,7 @@ jobs:
   - macOS_arm64
   - win_64
   - win_32
+  - win_arm64
   steps:
     - template: publish.yml
 
