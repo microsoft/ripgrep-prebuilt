@@ -11,8 +11,13 @@ set -ex
 . "$(dirname $0)/utils.sh"
 
 install_rustup() {
-    curl https://sh.rustup.rs -sSf \
-      | sh -s -- -y --default-toolchain="$RUST_VERSION"
+    if is_osx && is_arm64; then
+        arch --x86_64 sh <(curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs) \
+            --default-host "$TARGET" --default-toolchain "$RUST_VERSION"
+    else
+        curl https://sh.rustup.rs -sSf \
+            | sh -s -- -y --default-toolchain="$RUST_VERSION"
+    fi
 
     # Linux
     if [ -f /usr/local/cargo/env ]; then

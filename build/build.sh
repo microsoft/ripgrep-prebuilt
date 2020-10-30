@@ -11,7 +11,7 @@ main() {
     CARGO="$(builder)"
 
     # Test a normal debug build.
-    if is_arm || is_aarch64; then
+    if is_arm || is_aarch64 || is_arm64; then
         "$CARGO" build --target "$TARGET" --release
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
