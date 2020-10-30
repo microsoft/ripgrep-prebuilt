@@ -8,8 +8,8 @@ parameters:
 steps:
 - script: |
     set -ex
-    REPO=`[ ${{ parameters.target }} ] && $(node -p "require('./config.json').ripgrepRepo") || ${{ parameters.target }}`
-    TREEISH=`[ ${{ parameters.tag }} ] && $(node -p "require('./config.json').ripgrepTag") || ${{ parameters.tag }}`
+    REPO=`[ "${{ parameters.repo }}" ] &&  echo ${{ parameters.repo }} || echo $(node -p "require('./config.json').ripgrepRepo")`
+    TREEISH=`[ "${{ parameters.tag }}" ] && echo ${{ parameters.tag }} || echo $(node -p "require('./config.json').ripgrepTag")`
     git clone https://github.com/${REPO}.git
     cd ripgrep
     git checkout $TREEISH
