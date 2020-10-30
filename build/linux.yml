@@ -2,13 +2,14 @@ parameters:
   target: ''
   gcc_version: ''
   rust_version: 'stable'
+  repo: ''
+  tag: ''
 
 steps:
 - script: |
     set -ex
-
-    REPO=$(node -p "require('./config.json').ripgrepRepo")
-    TREEISH=$(node -p "require('./config.json').ripgrepTag")
+    REPO=`[ ${{ parameters.target }} ] && $(node -p "require('./config.json').ripgrepRepo") || ${{ parameters.target }}`
+    TREEISH=`[ ${{ parameters.tag }} ] && $(node -p "require('./config.json').ripgrepTag") || ${{ parameters.tag }}`
     git clone https://github.com/${REPO}.git
     cd ripgrep
     git checkout $TREEISH
