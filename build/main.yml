@@ -75,6 +75,7 @@ jobs:
   - linux_arm
   - linux_aarch64
   - macOS
+  - macOS_arm64
   - win_64
   - win_32
   steps:
