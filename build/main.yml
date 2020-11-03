@@ -31,7 +31,7 @@ jobs:
         gcc_version: 4.8
 - job: macOS
   pool:
-    vmImage: macOS-latest
+    vmImage: macOS-10.14
   steps:
     - template: linux.yml
       parameters:
