@@ -10,6 +10,10 @@ set -ex
 main() {
     CARGO="$(builder)"
 
+    ls -l /usr/local/opt
+    ls -l /usr/local/opt/pcre2
+    ls -l /usr/local/opt/pcre2/lib/libpcre2-8.0.dylib
+
     # Test a normal debug build.
     if is_arm || is_aarch64; then
         "$CARGO" build --target "$TARGET" --release
