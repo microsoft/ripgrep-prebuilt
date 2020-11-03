@@ -1,0 +1,23 @@
+steps:
+- script: |
+    set -ex
+    git clone https://github.com/BurntSushi/rust-pcre2.git
+    cd rust-pcre2
+    git checkout 0.2.2
+  displayName: Clone rust-pcre2
+- script: build/install.sh
+  displayName: Install Rust
+  env:
+    RUST_VERSION: 'stable'
+    TARGET: ${{ parameters.target }}
+- script: |
+    set -e
+    PCRE2_SYS_STATIC=1 cargo build --target ${{ parameters.target }} --release --verbose
+  displayName: Build
+  workingDirectory: rust-pcre2
+- script: |
+    set -e
+    libpcre2_sys=$(find . -name libpcre2_sys*.rlib)
+    otool -L $libpcre2_sys
+  displayName: Verify library
+  workingDirectory: rust-pcre2
