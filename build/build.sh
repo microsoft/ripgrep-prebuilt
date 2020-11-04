@@ -20,7 +20,7 @@ main() {
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
-        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2' --verbose
+        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     fi
 
     # Show the output of the most recent build.rs stderr.
@@ -43,7 +43,7 @@ main() {
     fi
 
     # Run tests for ripgrep and all sub-crates.
-    "$CARGO" test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    PCRE2_SYS_STATIC=1 "$CARGO" test --target "$TARGET" --release --verbose --all --features 'pcre2'
 }
 
 main
