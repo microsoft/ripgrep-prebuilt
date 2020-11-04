@@ -45,7 +45,7 @@ main() {
     fi
 
     # Run tests for ripgrep and all sub-crates.
-    "$CARGO" test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    PCRE2_SYS_STATIC=1 "$CARGO" test --target "$TARGET" --release --verbose --all --features 'pcre2'
 }
 
 main
