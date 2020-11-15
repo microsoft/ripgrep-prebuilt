@@ -30,7 +30,7 @@ install_rustup() {
 }
 
 install_targets() {
-    if [ $(host) != "$TARGET" ]; then
+    if [[ $(host) != "$TARGET" ]]; then
         rustup target add $TARGET
     fi
 }
@@ -51,7 +51,6 @@ install_linux_dependencies() {
     sudo apt-get install -y musl-tools
 
     if is_arm; then
-        sudo apt-get install gcc-4.8-arm-linux-gnueabihf
         sudo apt-get install gcc-arm-linux-gnueabihf
         sudo apt-get install binutils-arm-linux-gnueabihf
         sudo apt-get install libc6-armhf-cross
@@ -59,7 +58,7 @@ install_linux_dependencies() {
     fi
 
     if is_aarch64; then
-        sudo apt-get install gcc-4.8-aarch64-linux-gnu
+        sudo apt-get install gcc-aarch64-linux-gnu
     fi
 }
 
@@ -67,9 +66,9 @@ configure_cargo() {
     local prefix=$(gcc_prefix)
     if [ -n "${prefix}" ]; then
         local gcc_suffix=
-        if [ -n "$GCC_VERSION" ]; then
-          gcc_suffix="-$GCC_VERSION"
-        fi
+        # if [ -n "$GCC_VERSION" ]; then
+        #   gcc_suffix="-$GCC_VERSION"
+        # fi
         local gcc="${prefix}gcc${gcc_suffix}"
 
         # information about the cross compiler
