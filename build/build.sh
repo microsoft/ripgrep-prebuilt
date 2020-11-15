@@ -12,7 +12,7 @@ main() {
 
     # Test a normal debug build.
     if is_arm || is_aarch64; then
-        "$CARGO" build --target "$TARGET" --release
+        "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
