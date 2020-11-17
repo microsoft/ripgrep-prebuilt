@@ -1,6 +1,5 @@
 parameters:
   target: ''
-  gcc_version: ''
   rust_version: 'stable'
   repo: ''
   tag: ''
@@ -19,7 +18,6 @@ steps:
   env:
     RUST_VERSION: ${{ parameters.rust_version }}
     TARGET: ${{ parameters.target }}
-    GCC_VERSION: ${{ parameters.gcc_version }}
 - script: |
     sudo xcode-select -s /Applications/Xcode_12.2.app
   displayName: Switch to Xcode 12

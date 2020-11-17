@@ -20,7 +20,6 @@ jobs:
     - template: linux.yml
       parameters:
         target: arm-unknown-linux-gnueabihf
-        gcc_version: 4.8
 - job: linux_aarch64
   pool:
     vmImage: 'ubuntu-16.04'
@@ -28,7 +27,6 @@ jobs:
     - template: linux.yml
       parameters:
         target: aarch64-unknown-linux-gnu
-        gcc_version: 4.8
 - job: macOS
   pool:
     vmImage: macOS-latest
