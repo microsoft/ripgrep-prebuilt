@@ -66,9 +66,9 @@ configure_cargo() {
     local prefix=$(gcc_prefix)
     if [ -n "${prefix}" ]; then
         local gcc_suffix=
-        if [ -n "$GCC_VERSION" ]; then
-          gcc_suffix="-$GCC_VERSION"
-        fi
+        # if [ -n "$GCC_VERSION" ]; then
+        #   gcc_suffix="-$GCC_VERSION"
+        # fi
         local gcc="${prefix}gcc${gcc_suffix}"
 
         # information about the cross compiler
