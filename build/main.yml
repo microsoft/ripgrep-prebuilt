@@ -85,7 +85,7 @@ jobs:
 trigger:
   branches:
    include:
-   - master
+   - main
   tags:
     include:
     - v*

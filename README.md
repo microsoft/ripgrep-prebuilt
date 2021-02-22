@@ -1,6 +1,6 @@
 # ripgrep-prebuilt
 
-[![Build Status](https://dev.azure.com/vscode/ripgrep-prebuilt/_apis/build/status/microsoft.ripgrep-prebuilt?branchName=master)](https://dev.azure.com/vscode/ripgrep-prebuilt/_build/latest?definitionId=18&branchName=master)
+[![Build Status](https://dev.azure.com/vscode/ripgrep-prebuilt/_apis/build/status/microsoft.ripgrep-prebuilt?branchName=main)](https://dev.azure.com/vscode/ripgrep-prebuilt/_build/latest?definitionId=18&branchName=main)
 
 Builds [ripgrep](https://github.com/BurntSushi/ripgrep) on Azure Pipelines for multiple platforms, used by VS Code.
 
