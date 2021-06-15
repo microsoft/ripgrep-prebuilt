@@ -4,7 +4,7 @@ steps:
     path: '$(System.ArtifactsDirectory)'
 - task: GitHubRelease@0
   inputs:
-    gitHubConnection: Microsoft
+    gitHubConnection: github.com_oauth
     repositoryName: '$(Build.Repository.Name)'
     action: 'edit'
     target: '$(Build.SourceVersion)'
