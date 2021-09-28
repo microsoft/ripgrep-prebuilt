@@ -27,6 +27,13 @@ jobs:
     - template: linux.yml
       parameters:
         target: aarch64-unknown-linux-gnu
+- job: linux_riscv64
+  pool:
+    vmImage: 'ubuntu-18.04'
+  steps:
+    - template: linux.yml
+      parameters:
+        target: riscv64gc-unknown-linux-gnu
 - job: macOS
   pool:
     vmImage: macOS-latest
@@ -74,6 +81,7 @@ jobs:
   - linux_32
   - linux_arm
   - linux_aarch64
+  - linux_riscv64
   - macOS
   - macOS_arm64
   - win_64

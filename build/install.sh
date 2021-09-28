@@ -60,6 +60,10 @@ install_linux_dependencies() {
     if is_aarch64; then
         sudo apt-get install gcc-aarch64-linux-gnu
     fi
+
+    if is_riscv64; then
+        sudo apt-get install gcc-riscv64-linux-gnu
+    fi
 }
 
 configure_cargo() {

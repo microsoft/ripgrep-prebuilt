@@ -35,6 +35,9 @@ architecture() {
         aarch64-apple-darwin)
             echo arm64
             ;;
+        riscv64gc-unknown-linux-gnu)
+            echo riscv64
+            ;;
         *)
             die "architecture: unexpected target $TARGET"
             ;;
@@ -48,6 +51,9 @@ gcc_prefix() {
             ;;
         aarch64)
             echo aarch64-linux-gnu-
+            ;;
+        riscv64)
+            echo riscv64-linux-gnu-
             ;;
         *)
             return
@@ -94,6 +100,13 @@ is_arm64() {
     case "$(architecture)" in
         arm64) return 0 ;;
         *)     return 1 ;;
+    esac
+}
+
+is_riscv64() {
+    case "$(architecture)" in
+        riscv64) return 0 ;;
+        *)       return 1 ;;
     esac
 }
 

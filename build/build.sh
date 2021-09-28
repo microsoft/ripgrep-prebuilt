@@ -20,6 +20,8 @@ main() {
           SDKROOT=$(xcrun -sdk macosx11.0 --show-sdk-path) \
           MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx11.0 --show-sdk-platform-version) \
           PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
+        elif is_riscv64; then 
+          "$CARGO" build --target "$TARGET" --release
         else
           PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
         fi
@@ -40,7 +42,7 @@ main() {
 
     # Apparently tests don't work on arm, so just bail now. I guess we provide
     # ARM releases on a best effort basis?
-    if is_arm || is_aarch64 || is_arm64; then
+    if is_arm || is_aarch64 || is_arm64 || is_riscv64; then
       return 0
     fi
 
