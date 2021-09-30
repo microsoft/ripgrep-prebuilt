@@ -32,6 +32,9 @@ architecture() {
         aarch64-unknown-linux-gnu)
             echo aarch64
             ;;
+        aarch64-unknown-linux-musl)
+            echo aarch64-musl
+            ;;
         aarch64-apple-darwin)
             echo arm64
             ;;
@@ -90,6 +93,13 @@ is_aarch64() {
     esac
 }
 
+is_aarch64_musl() {
+    case "$(architecture)" in
+        aarch64-musl) return 0 ;;
+        *)     return 1 ;;
+    esac
+}
+
 is_arm64() {
     case "$(architecture)" in
         arm64) return 0 ;;
@@ -112,19 +122,9 @@ is_osx() {
 }
 
 builder() {
-    if is_musl && is_x86_64; then
-        # IMPORTANT - put this back when building anything past 11.0.1
-        # set -u
-        # D=$(mktemp -d)
-        # git clone https://github.com/rust-embedded/cross.git "$D"
-        # cd "$D"
-        # curl -O -L "https://gist.githubusercontent.com/nickbabcock/c7bdc8e5974ed9956abf46ffd7dc13ff/raw/e211bc17ea88e505003ad763fac7060b4ac1d8d0/patch"
-        # git apply patch
-        # cargo install --path .
-        # rm -rf "$D"
-        # echo "cross"
-
-        echo "cargo"
+    if is_musl && is_aarch64_musl; then
+        cargo install cross
+        echo "cross"
     else
         echo "cargo"
     fi
