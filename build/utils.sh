@@ -38,6 +38,12 @@ architecture() {
         aarch64-apple-darwin)
             echo arm64
             ;;
+        powerpc64le-unknown-linux-gnu)
+            echo ppc64le
+            ;;
+        s390x-unknown-linux-gnu)
+            echo s390x
+            ;;
         *)
             die "architecture: unexpected target $TARGET"
             ;;
@@ -52,6 +58,12 @@ gcc_prefix() {
         aarch64)
             echo aarch64-linux-gnu-
             ;;
+        ppc64le)
+            echo  powerpc64le-linux-gnu-
+	        ;;
+        s390x)
+            echo s390x-linux-gnu-
+	        ;;
         *)
             return
             ;;
@@ -103,6 +115,20 @@ is_aarch64_musl() {
 is_arm64() {
     case "$(architecture)" in
         arm64) return 0 ;;
+        *)     return 1 ;;
+    esac
+}
+
+is_ppc64le() {
+    case "$(architecture)" in
+        ppc64le) return 0 ;;
+        *)       return 1 ;;
+    esac
+}	
+
+is_s390x() {
+    case "$(architecture)" in
+        s390x) return 0 ;;
         *)     return 1 ;;
     esac
 }

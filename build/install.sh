@@ -60,6 +60,14 @@ install_linux_dependencies() {
     if is_aarch64; then
         sudo apt-get install gcc-aarch64-linux-gnu
     fi
+
+    if is_ppc64le; then
+        sudo apt-get install -y gcc-powerpc64le-linux-gnu
+    fi
+
+    if is_s390x; then
+        sudo apt-get install -y gcc-s390x-linux-gnu
+    fi
 }
 
 configure_cargo() {

@@ -72,6 +72,20 @@ jobs:
     - template: windows.yml
       parameters:
         target: aarch64-pc-windows-msvc
+- job: ppc64le
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: linux.yml
+      parameters:
+        target: powerpc64le-unknown-linux-gnu
+- job: s390x
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - template: linux.yml
+      parameters:
+        target: s390x-unknown-linux-gnu
 - job: publish
   pool:
     vmImage: 'ubuntu-16.04'
@@ -87,6 +101,8 @@ jobs:
   - win_64
   - win_32
   - win_arm64
+  - ppc64le
+  - s390x
   steps:
     - template: publish.yml
 

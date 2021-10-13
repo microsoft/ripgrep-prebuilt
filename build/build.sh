@@ -11,8 +11,12 @@ main() {
     CARGO="$(builder)"
 
     # Test a normal debug build.
-    if is_arm || is_aarch64; then
+    if is_arm || is_aarch64 || is_ppc64le; then
         "$CARGO" build --target "$TARGET" --release --features 'pcre2'
+    # pcre2 is not supported on s390x
+    # https://github.com/zherczeg/sljit/issues/89
+    elif is_s390x; then
+        "$CARGO" build --release --target=$TARGET
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
@@ -38,9 +42,9 @@ main() {
     # sanity check the file type
     file target/"$TARGET"/release/rg
 
-    # Apparently tests don't work on arm, so just bail now. I guess we provide
-    # ARM releases on a best effort basis?
-    if is_arm || is_aarch64 || is_arm64; then
+    # Apparently tests don't work on arm, s390x and ppc64le so just bail now. I guess we provide
+    # ARM, ppc64le and s390x releases on a best effort basis?
+    if is_arm || is_aarch64 || is_arm64 || is_ppc64le || is_s390x; then
       return 0
     fi
 
