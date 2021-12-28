@@ -19,7 +19,7 @@ steps:
     RUST_VERSION: ${{ parameters.rust_version }}
     TARGET: ${{ parameters.target }}
 - script: |
-    ls -l /Applications
+    sudo xcode-select -s /Applications/Xcode_13.2.app
   displayName: Switch to Xcode 12
   condition: eq('${{parameters.target}}', 'aarch64-apple-darwin')
 - script: ../build/build.sh
