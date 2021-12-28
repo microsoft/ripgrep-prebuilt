@@ -16,7 +16,7 @@ mk_tarball() {
     local gcc_prefix="$(gcc_prefix)"
 
     if is_musl; then
-        musl-strip "target/$TARGET/release/rg"
+        aarch64-unknown-linux-musl-strip "target/$TARGET/release/rg"
     else
         # Copy the ripgrep binary and strip it.
         "${gcc_prefix}strip" "target/$TARGET/release/rg"
