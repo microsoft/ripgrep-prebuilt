@@ -33,7 +33,6 @@ steps:
   env:
     TARGET: ${{ parameters.target }}
     OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Pipeline Artifact'
   inputs:
