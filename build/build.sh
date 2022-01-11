@@ -20,13 +20,7 @@ main() {
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
-        if is_osx && is_arm64; then
-          SDKROOT=$(xcrun -sdk macosx11.0 --show-sdk-path) \
-          MACOSX_DEPLOYMENT_TARGET=$(xcrun -sdk macosx11.0 --show-sdk-platform-version) \
-          PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
-        else
-          PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
-        fi
+        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     fi
 
     # Show the output of the most recent build.rs stderr.
