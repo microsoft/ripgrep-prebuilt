@@ -12,11 +12,6 @@ mk_tarball() {
     this_tag=`git tag -l --contains HEAD`
     popd
     local name="ripgrep-${this_tag}-${TARGET}.tar.gz"
-    # When cross-compiling, use the right `strip` tool on the binary.
-    local gcc_prefix="$(gcc_prefix)"
-    
-    # Copy the ripgrep binary and strip it.
-    "${gcc_prefix}strip" "target/$TARGET/release/rg"
 
     tar czvf "$OUT_DIR/$name" -C ./target/$TARGET/release rg
     echo "##vso[task.setvariable variable=Name]$name"

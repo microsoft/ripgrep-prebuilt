@@ -12,15 +12,15 @@ main() {
 
     # Test a normal debug build.
     if is_arm || is_aarch64 || is_ppc64le; then
-        "$CARGO" build --target "$TARGET" --release --features 'pcre2'
+        CARGO_PROFILE_RELEASE_DEBUG=0 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     # pcre2 is not supported on s390x
     # https://github.com/zherczeg/sljit/issues/89
     elif is_s390x; then
-        "$CARGO" build --release --target=$TARGET
+        CARGO_PROFILE_RELEASE_DEBUG=0 "$CARGO" build --release --target=$TARGET
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
-        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
+        PCRE2_SYS_STATIC=1 CARGO_PROFILE_RELEASE_DEBUG=0 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     fi
 
     # Show the output of the most recent build.rs stderr.
