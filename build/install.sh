@@ -82,6 +82,7 @@ configure_cargo() {
         mkdir -p .cargo
         cat >> .cargo/config <<EOF
 [target.$TARGET]
+debug = false
 linker = "${gcc}"
 EOF
     fi
