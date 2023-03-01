@@ -51,21 +51,21 @@ jobs:
         rust_version: nightly
 - job: win_64
   pool:
-    vmImage: VS2017-Win2016
+    vmImage: windows-2022
   steps:
     - template: windows.yml
       parameters:
         target: x86_64-pc-windows-msvc
 - job: win_32
   pool:
-    vmImage: VS2017-Win2016
+    vmImage: windows-2022
   steps:
     - template: windows.yml
       parameters:
         target: i686-pc-windows-msvc
 - job: win_arm64
   pool:
-    vmImage: VS2017-Win2016
+    vmImage: windows-2022
   steps:
     - template: windows.yml
       parameters:
