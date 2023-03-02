@@ -1,6 +1,6 @@
 parameters:
   target: ''
-  rust_version: 'stable'
+  rust_version: '1.56.0'
   repo: ''
   tag: ''
 
