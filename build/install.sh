@@ -84,13 +84,12 @@ configure_cargo() {
 [target.$TARGET]
 linker = "${gcc}"
 EOF
-
+    fi
         cat >> Cargo.toml <<EOF
 [profile.release]
 debug = false
 strip = true
 EOF
-    fi
 }
 
 main() {
