@@ -85,6 +85,7 @@ configure_cargo() {
 linker = "${gcc}"
 [profile.release]
 debug = false
+strip = true
 EOF
     fi
 }
