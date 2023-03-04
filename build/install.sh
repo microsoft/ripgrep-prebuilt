@@ -80,17 +80,19 @@ configure_cargo() {
 
         # tell cargo which linker to use for cross compilation
         mkdir -p .cargo
+        
         cat >> .cargo/config <<EOF
 [target.$TARGET]
 linker = "${gcc}"
 EOF
     fi
-        cat >> Cargo.toml <<EOF
+    cat >> .cargo/config <<EOF
+    
 [profile.release]
 debug = false
 strip = true
 EOF
-cat Cargo.toml
+cat .cargo/config
 }
 
 main() {
