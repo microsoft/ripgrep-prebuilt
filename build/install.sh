@@ -71,7 +71,9 @@ install_linux_dependencies() {
 }
 
 configure_cargo() {
+    mkdir -p .cargo
     local prefix=$(gcc_prefix)
+
     if [ -n "${prefix}" ]; then
         local gcc="${prefix}gcc"
 
@@ -79,20 +81,18 @@ configure_cargo() {
         "${gcc}" -v
 
         # tell cargo which linker to use for cross compilation
-        mkdir -p .cargo
-        
         cat >> .cargo/config <<EOF
 [target.$TARGET]
 linker = "${gcc}"
 EOF
     fi
-    cat >> .cargo/config <<EOF
     
+    cat >> .cargo/config <<EOF
+
 [profile.release]
 debug = false
 strip = true
 EOF
-cat .cargo/config
 }
 
 main() {
