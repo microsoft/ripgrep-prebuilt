@@ -86,12 +86,14 @@ configure_cargo() {
 linker = "${gcc}"
 EOF
     fi
-    
+
     cat >> .cargo/config <<EOF
 
 [profile.release]
 debug = false
 strip = true
+lto = true
+codegen-units = 1
 EOF
 }
 
