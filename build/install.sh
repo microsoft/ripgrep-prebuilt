@@ -90,6 +90,7 @@ EOF
 debug = false
 strip = true
 EOF
+cat Cargo.toml
 }
 
 main() {
