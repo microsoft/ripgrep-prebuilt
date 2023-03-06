@@ -1,6 +1,6 @@
 parameters:
   target: ''
-  rust_version: 'stable'
+  rust_version: '1.67.0'
   repo: ''
   tag: ''
 
@@ -29,10 +29,10 @@ steps:
   env:
     TARGET: ${{ parameters.target }}
     OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: succeeded()
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Pipeline Artifact'
   inputs:
     artifactName: $(Name)
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: succeeded()

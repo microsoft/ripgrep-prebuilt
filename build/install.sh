@@ -71,7 +71,9 @@ install_linux_dependencies() {
 }
 
 configure_cargo() {
+    mkdir -p .cargo
     local prefix=$(gcc_prefix)
+
     if [ -n "${prefix}" ]; then
         local gcc="${prefix}gcc"
 
@@ -79,12 +81,20 @@ configure_cargo() {
         "${gcc}" -v
 
         # tell cargo which linker to use for cross compilation
-        mkdir -p .cargo
         cat >> .cargo/config <<EOF
 [target.$TARGET]
 linker = "${gcc}"
 EOF
     fi
+
+    cat >> .cargo/config <<EOF
+
+[profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
+debug = false # don't ship with debug builds 
+strip = true # removes debug symbols
+lto = true # enables link time optimization
+codegen-units = 1 # makes it link in a single progress, where it normally runs in multiple independent workers in parallel. Might make compilation a little slower
+EOF
 }
 
 main() {
