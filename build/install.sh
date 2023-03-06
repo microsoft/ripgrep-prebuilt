@@ -89,11 +89,11 @@ EOF
 
     cat >> .cargo/config <<EOF
 
-[profile.release]
-debug = false
-strip = true
-lto = true
-codegen-units = 1
+[profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
+debug = false # don't ship with debug builds 
+strip = true # removes debug symbols
+lto = true # enables link time optimization
+codegen-units = 1 # makes it link in a single progress, where it normally runs in multiple independent workers in parallel. Might make compilation a little slower
 EOF
 }
 
