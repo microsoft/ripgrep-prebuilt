@@ -71,7 +71,6 @@ install_linux_dependencies() {
 }
 
 configure_cargo() {
-    mkdir -p .cargo
     local prefix=$(gcc_prefix)
 
     if [ -n "${prefix}" ]; then
@@ -79,6 +78,8 @@ configure_cargo() {
 
         # information about the cross compiler
         "${gcc}" -v
+        
+        mkdir -p .cargo
 
         # tell cargo which linker to use for cross compilation
         cat >> .cargo/config <<EOF
@@ -87,7 +88,7 @@ linker = "${gcc}"
 EOF
     fi
 
-    cat >> .cargo/config <<EOF
+    cat >> ripgrep/Cargo.toml <<EOF
 
 [profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
 debug = false # don't ship with debug builds 
