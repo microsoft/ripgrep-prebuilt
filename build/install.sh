@@ -100,9 +100,10 @@ EOF
 }
 
 override_debug() {
-    local cargo_file="ripgrep/Cargo.toml"
-    local replace_text=$(sed 's/debug = 1/debug = 0/' ${cargo_file})
-    echo "${replace_text}" > ${cargo_file}
+    # remove debug builds
+    # Uses the env variable to set the debug flag because cargo builds that use cross can only use configs that are within the ripgrep dir
+    # and their Cargo.toml already sets debug=1 https://github.com/BurntSushi/ripgrep/blob/61101289fabc032fd8e90009c41d0b78e6dfc9a2/Cargo.toml#L87
+    export CARGO_PROFILE_RELEASE_DEBUG=0  
 }
 
 main() {
