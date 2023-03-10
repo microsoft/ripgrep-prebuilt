@@ -71,7 +71,6 @@ install_linux_dependencies() {
 }
 
 configure_cargo() {
-    mkdir -p .cargo
     local prefix=$(gcc_prefix)
 
     if [ -n "${prefix}" ]; then
@@ -80,21 +79,31 @@ configure_cargo() {
         # information about the cross compiler
         "${gcc}" -v
 
+        mkdir -p .cargo
+
         # tell cargo which linker to use for cross compilation
         cat >> .cargo/config <<EOF
 [target.$TARGET]
 linker = "${gcc}"
 EOF
     fi
+    
+    override_debug
 
-    cat >> .cargo/config <<EOF
+    cat >> ripgrep/.cargo/config <<EOF
 
 [profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
-debug = false # don't ship with debug builds 
 strip = true # removes debug symbols
 lto = true # enables link time optimization
 codegen-units = 1 # makes it link in a single progress, where it normally runs in multiple independent workers in parallel. Might make compilation a little slower
 EOF
+}
+
+override_debug() {
+    # remove debug builds
+    # Uses the env variable to set the debug flag because cargo builds that use cross can only use configs that are within the ripgrep dir
+    # and their Cargo.toml already sets debug=1 https://github.com/BurntSushi/ripgrep/blob/61101289fabc032fd8e90009c41d0b78e6dfc9a2/Cargo.toml#L87
+    export CARGO_PROFILE_RELEASE_DEBUG=0  
 }
 
 main() {
