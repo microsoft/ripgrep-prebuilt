@@ -78,7 +78,7 @@ configure_cargo() {
 
         # information about the cross compiler
         "${gcc}" -v
-        
+
         mkdir -p .cargo
 
         # tell cargo which linker to use for cross compilation
@@ -87,15 +87,22 @@ configure_cargo() {
 linker = "${gcc}"
 EOF
     fi
+    
+    override_debug
 
-    cat >> ripgrep/Cargo.toml <<EOF
+    cat >> ripgrep/.cargo/config <<EOF
 
 [profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
-debug = false # don't ship with debug builds 
 strip = true # removes debug symbols
 lto = true # enables link time optimization
 codegen-units = 1 # makes it link in a single progress, where it normally runs in multiple independent workers in parallel. Might make compilation a little slower
 EOF
+}
+
+override_debug() {
+    local cargo_file="ripgrep/Cargo.toml"
+    local replace_text=$(sed 's/debug = 1/debug = 0/' ${cargo_file})
+    echo "${replace_text}" > ${cargo_file}
 }
 
 main() {
