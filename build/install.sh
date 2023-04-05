@@ -51,8 +51,7 @@ install_linux_dependencies() {
     sudo apt-get install -y musl-tools
 
     if is_arm; then
-        sudo apt-get install gcc-arm-linux-gnueabihf
-        sudo apt-get install binutils-arm-linux-gnueabihf
+        sudo apt-get install arm-linux-musleabihf-gcc
         sudo apt-get install libc6-armhf-cross
         sudo apt-get install libc6-dev-armhf-cross
     fi
