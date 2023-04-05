@@ -26,8 +26,8 @@ architecture() {
         i686-*|i586-*|i386-*)
             echo i386
             ;;
-        arm*-unknown-linux-gnueabihf)
-            echo armhf
+        arm*-unknown-linux-musleabihf)
+            echo armhf-musl
             ;;
         aarch64-unknown-linux-gnu)
             echo aarch64
@@ -52,9 +52,6 @@ architecture() {
 
 gcc_prefix() {
     case "$(architecture)" in
-        armhf)
-            echo arm-linux-gnueabihf-
-            ;;
         aarch64)
             echo aarch64-linux-gnu-
             ;;
