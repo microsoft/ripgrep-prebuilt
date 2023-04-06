@@ -52,6 +52,9 @@ architecture() {
 
 gcc_prefix() {
     case "$(architecture)" in
+        armhf)
+            echo arm-linux-musleabihf-
+            ;;
         aarch64)
             echo aarch64-linux-gnu-
             ;;
