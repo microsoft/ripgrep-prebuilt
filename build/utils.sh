@@ -88,9 +88,9 @@ is_x86_64() {
     esac
 }
 
-is_arm() {
+is_arm_musl() {
     case "$(architecture)" in
-        armhf) return 0 ;;
+        armhf-musl) return 0 ;;
         *)     return 1 ;;
     esac
 }

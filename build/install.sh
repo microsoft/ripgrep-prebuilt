@@ -50,7 +50,7 @@ install_linux_dependencies() {
     sudo apt-get update
     sudo apt-get install -y musl-tools
 
-    if is_arm; then
+    if is_arm_musl; then
         sudo apt-get install arm-linux-musleabihf-gcc
         sudo apt-get install libc6-armhf-cross
         sudo apt-get install libc6-dev-armhf-cross
