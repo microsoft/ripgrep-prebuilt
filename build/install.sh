@@ -75,7 +75,7 @@ configure_cargo() {
         local gcc="${prefix}gcc"
 
         # information about the cross compiler
-        "${gcc}" -v
+        # "${gcc}" -v
 
         mkdir -p .cargo
 
