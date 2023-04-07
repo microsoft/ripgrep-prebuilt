@@ -77,11 +77,12 @@ configure_cargo() {
         local gcc="${prefix}gcc"
 
         # information about the cross compiler
-        # "${gcc}" -v
+        "${gcc}" -v
 
         mkdir -p .cargo
 
         # tell cargo which linker to use for cross compilation
+        
         cat >> ripgrep/.cargo/config <<EOF
 [target.$TARGET]
 linker = "${gcc}"
