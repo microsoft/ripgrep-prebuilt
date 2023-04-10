@@ -52,8 +52,7 @@ install_linux_dependencies() {
 
     if is_arm_musl; then
         sudo apt-get install gcc-arm-linux-gnueabihf
-        sudo apt-get install binutils-arm-linux-gnueabihf
-        sudo ln -s /usr/bin/arm-linux-gnueabihf-gcc /usr/bin/arm-linux-musleabihf-gcc    
+        sudo apt-get install binutils-arm-linux-gnueabihf 
         sudo apt-get install libc6-armhf-cross
         sudo apt-get install libc6-dev-armhf-cross
     fi
