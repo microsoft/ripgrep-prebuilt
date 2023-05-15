@@ -14,7 +14,7 @@ main() {
     if is_linux && is_musl; then
         # jemalloc doesn't allow 16K page sizes for linux musl 
         # https://github.com/microsoft/ripgrep-prebuilt/issues/26
-        ENV_VARS="JEMALLOC_SYS_WITH_LG_PAGE=14"
+        ENV_VARS="JEMALLOC_SYS_WITH_LG_PAGE=14;"
     fi
 
     # Test a normal debug build.
@@ -25,7 +25,7 @@ main() {
     elif is_s390x; then
         $ENV_VARS "$CARGO" build --release --target=$TARGET
     else
-        ENV_VARS="PCRE2_SYS_STATIC=1 $ENV_VARS";
+        ENV_VARS="PCRE2_SYS_STATIC=1; $ENV_VARS";
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
         $ENV_VARS "$CARGO" build --target "$TARGET" --release --features 'pcre2'
