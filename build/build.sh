@@ -10,11 +10,11 @@ set -ex
 main() {
     CARGO="$(builder)"
 
-    ENV_VARS = "";
+    ENV_VARS=""
     if is_linux && is_musl; then
         # jemalloc doesn't allow 16K page sizes for linux musl 
         # https://github.com/microsoft/ripgrep-prebuilt/issues/26
-        ENV_VARS = "JEMALLOC_SYS_WITH_LG_PAGE=14";
+        ENV_VARS = "JEMALLOC_SYS_WITH_LG_PAGE=14"
     fi
 
     # Test a normal debug build.
