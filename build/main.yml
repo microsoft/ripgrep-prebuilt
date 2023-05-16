@@ -48,7 +48,6 @@ jobs:
     - template: linux.yml
       parameters:
         target: aarch64-apple-darwin
-        rust_version: nightly
 - job: win_64
   pool:
     vmImage: windows-2022
