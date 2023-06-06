@@ -26,11 +26,7 @@ main() {
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
-        if is_linux && is_musl; then
-            JEMALLOC_SYS_WITH_LG_PAGE=14 PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
-        else 
-            PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
-        fi
+        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     fi
 
     # Show the output of the most recent build.rs stderr.
