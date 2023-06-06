@@ -12,7 +12,7 @@ main() {
 
     # Test a normal debug build.
     if is_arm || is_aarch64 || is_ppc64le; then
-        if is_linux && is_musl; then
+        if is_linux && is_aarch64 && is_musl; then
             # jemalloc doesn't allow 16K page sizes for linux musl 
             # https://github.com/microsoft/ripgrep-prebuilt/issues/26
             JEMALLOC_SYS_WITH_LG_PAGE=14 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
