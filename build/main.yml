@@ -1,3 +1,6 @@
+resources:
+  containers:
+
 jobs:
 - job: linux_64
   pool:
@@ -16,6 +19,8 @@ jobs:
 - job: linux_arm
   pool:
     vmImage: 'ubuntu-latest'
+  container:
+      image: mcr.microsoft.com/mirror/docker/library/ubuntu:18.04
   steps:
     - template: linux.yml
       parameters:
