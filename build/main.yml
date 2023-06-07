@@ -1,6 +1,3 @@
-resources:
-  containers:
-
 jobs:
 - job: linux_64
   pool:
