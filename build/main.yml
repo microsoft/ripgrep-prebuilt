@@ -21,8 +21,8 @@ jobs:
   steps:
     - script: |
         set -ex
-        sudo apt-get install git
-        sudo apt-get install nodejs
+        apt-get install git
+        apt-get install nodejs
       displayName: Container Pre-reqs
     - template: linux.yml
       parameters:
