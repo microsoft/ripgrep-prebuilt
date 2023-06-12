@@ -13,6 +13,13 @@ steps:
     cd ripgrep
     git checkout $TREEISH
   displayName: Clone Ripgrep
+- script: |
+    set -ex
+    for patch in $(node -p "require('./config.json').patches"); do
+      git apply --ignore-whitespace --ignore-space-change ../patches/$patch
+    done
+  workingDirectory: ripgrep
+  displayName: Apply patches
 - script: build/install.sh
   displayName: Install Rust
   env:

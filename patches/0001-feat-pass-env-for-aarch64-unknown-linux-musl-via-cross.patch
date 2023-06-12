@@ -1,0 +1,19 @@
+From 2bb7321d024a3f7e28f072223551706ff556d68c Mon Sep 17 00:00:00 2001
+From: deepak1556 <hop2deep@gmail.com>
+Date: Tue, 13 Jun 2023 01:09:11 +0900
+Subject: [PATCH] feat: pass env for aarch64-unknown-linux-musl via cross
+
+diff --git a/Cross.toml b/Cross.toml
+index 3b0e4ca..7fd7d06 100644
+--- a/Cross.toml
++++ b/Cross.toml
+@@ -9,3 +9,8 @@ image = "burntsushi/cross:mips64-unknown-linux-gnuabi64"
+ 
+ [target.arm-unknown-linux-gnueabihf]
+ image = "burntsushi/cross:arm-unknown-linux-gnueabihf"
++
++[target.aarch64-unknown-linux-musl.env]
++passthrough = [
++  "JEMALLOC_SYS_WITH_LG_PAGE",
++]
+
