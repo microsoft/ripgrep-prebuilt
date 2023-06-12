@@ -19,6 +19,8 @@ jobs:
   container:
       image: mcr.microsoft.com/mirror/docker/library/ubuntu:18.04
   steps:
+    - script: build/create_container.sh
+      displayName: Container Pre-reqs
     - template: linux.yml
       parameters:
         target: arm-unknown-linux-gnueabihf
