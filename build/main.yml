@@ -19,7 +19,10 @@ jobs:
   container:
       image: mcr.microsoft.com/mirror/docker/library/ubuntu:18.04
   steps:
-    - script: build/create_container.sh
+    - script: |
+        set -ex
+        sudo apt-get install git
+        sudo apt-get install nodejs
       displayName: Container Pre-reqs
     - template: linux.yml
       parameters:
