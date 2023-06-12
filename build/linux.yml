@@ -15,7 +15,7 @@ steps:
   displayName: Clone Ripgrep
 - script: |
     set -ex
-    for patch in $(node -p "require('../config.json').patches"); do
+    for patch in $(node -p "require('../config.json').patches.join(' ')"); do
       git apply --ignore-whitespace --ignore-space-change ../patches/$patch
     done
   workingDirectory: ripgrep
