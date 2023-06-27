@@ -16,7 +16,14 @@ jobs:
 - job: linux_arm
   pool:
     vmImage: 'ubuntu-latest'
+  container:
+      image: mcr.microsoft.com/mirror/docker/library/ubuntu:18.04
   steps:
+    - script: |
+        set -ex
+        apt-get install git
+        apt-get install nodejs
+      displayName: Container Pre-reqs
     - template: linux.yml
       parameters:
         target: arm-unknown-linux-gnueabihf
