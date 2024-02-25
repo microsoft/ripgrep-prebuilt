@@ -5,25 +5,26 @@ parameters:
   rust_version: 'stable'
 
 steps:
-- pwsh: |
-    if(!(Test-Path ".config\tsaoptions.json")) {
-      $tsaOptions = @'
-      {
-        "codebaseName": "devdiv_microsoft_vscode_ripgrep_prebuilt",
-        "instanceUrl": "https://devdiv.visualstudio.com/defaultcollection",
-        "projectName": "DevDiv",
-        "areaPath": "DevDiv\\VS Code (compliance tracking only)\\Visual Studio Code NPM Packages",
-        "notificationAliases": [
-          "stbatt@microsoft.com",
-          "lszomoru@microsoft.com"
-        ]
-      }
-    '@
+- ${{ if startsWith(${{ parameters.target }}, 'x86_64') }}:
+  - pwsh: |
+      if(!(Test-Path ".config\tsaoptions.json")) {
+        $tsaOptions = @'
+        {
+          "codebaseName": "devdiv_microsoft_vscode_ripgrep_prebuilt",
+          "instanceUrl": "https://devdiv.visualstudio.com/defaultcollection",
+          "projectName": "DevDiv",
+          "areaPath": "DevDiv\\VS Code (compliance tracking only)\\Visual Studio Code NPM Packages",
+          "notificationAliases": [
+            "stbatt@microsoft.com",
+            "lszomoru@microsoft.com"
+          ]
+        }
+      '@
 
-      New-Item -Path ".config\tsaoptions.json" -ItemType File -Value $tsaOptions -Force
-    }
-    Get-Content -Path ".config\tsaoptions.json"
-  displayName: 📤 Generate tsaoptions.json
+        New-Item -Path ".config\tsaoptions.json" -ItemType File -Value $tsaOptions -Force
+      }
+      Get-Content -Path ".config\tsaoptions.json"
+    displayName: 📤 Generate tsaoptions.json
 
 - powershell: |
     gci env:*
@@ -74,33 +75,34 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
 
-- task: APIScan@2
-  inputs:
-    softwareFolder: ripgrep
-    softwareName: 'ripgrep'
-    softwareVersionNum: '13'
-    isLargeApp: false
-    toolVersion: 'Latest'
-  displayName: Run APIScan
-  condition: succeeded()
-  env:
-    AzureServicesAuthConnectionString: $(apiscan-connectionstring)
+- ${{ if startsWith(${{ parameters.target }}, 'x86_64') }}:
+  - task: APIScan@2
+    inputs:
+      softwareFolder: ripgrep
+      softwareName: 'ripgrep'
+      softwareVersionNum: '13'
+      isLargeApp: false
+      toolVersion: 'Latest'
+    displayName: Run APIScan
+    condition: succeeded()
+    env:
+      AzureServicesAuthConnectionString: $(apiscan-connectionstring)
 
-- task: PublishSecurityAnalysisLogs@3
-  displayName: Publish security logs
-  inputs:
-    ArtifactName: 'CodeAnalysisLogs'
-    ArtifactType: 'Container'
-    AllTools: true
-    ToolLogsNotFoundAction: 'Standard'
+  - task: PublishSecurityAnalysisLogs@3
+    displayName: Publish security logs
+    inputs:
+      ArtifactName: 'CodeAnalysisLogs'
+      ArtifactType: 'Container'
+      AllTools: true
+      ToolLogsNotFoundAction: 'Standard'
 
-# TSA Upload
-- task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@2
-  displayName: 🔒 TSA Upload
-  continueOnError: true
-  inputs:
-    GdnPublishTsaConfigFile: $(Build.SourcesDirectory)/.config/tsaoptions.json
-    GdnPublishTsaOnboard: True
+  # TSA Upload
+  - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@2
+    displayName: 🔒 TSA Upload
+    continueOnError: true
+    inputs:
+      GdnPublishTsaConfigFile: $(Build.SourcesDirectory)/.config/tsaoptions.json
+      GdnPublishTsaOnboard: True
 
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Pipeline Artifact'
