@@ -18,7 +18,7 @@ steps:
           "lszomoru@microsoft.com"
         ]
       }
-      '@
+    '@
 
       New-Item -Path ".config\tsaoptions.json" -ItemType File -Value $tsaOptions -Force
     }
