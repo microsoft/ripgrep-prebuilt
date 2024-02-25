@@ -7,7 +7,8 @@ parameters:
 steps:
 - pwsh: |
     if(!(Test-Path ".config\tsaoptions.json")) {
-      $tsaOptions = @'{
+      $tsaOptions = @'
+      {
         "codebaseName": "devdiv_microsoft_vscode_ripgrep_prebuilt",
         "instanceUrl": "https://devdiv.visualstudio.com/defaultcollection",
         "projectName": "DevDiv",
