@@ -73,11 +73,10 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
 
 - task: APIScan@2
   inputs:
-    softwareFolder: $(Agent.TempDirectory)/apiscan
+    softwareFolder: '$(Agent.TempDirectory)/apiscan'
     softwareName: 'ripgrep'
     softwareVersionNum: '13'
     isLargeApp: false
