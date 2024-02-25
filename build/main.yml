@@ -56,8 +56,6 @@ jobs:
       parameters:
         target: x86_64-pc-windows-msvc
 - job: win_64_apiscan
-  variables:
-    - group: 'API Scan'
   pool:
     vmImage: windows-2022
   steps:
