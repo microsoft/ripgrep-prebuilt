@@ -5,7 +5,7 @@ parameters:
   rust_version: 'stable'
 
 steps:
-- ${{ if startsWith(${{ parameters.target }}, 'x86_64') }}:
+- ${{ if startsWith(parameters.target, 'x86_64') }}:
   - pwsh: |
       if(!(Test-Path ".config\tsaoptions.json")) {
         $tsaOptions = @'
@@ -75,7 +75,7 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
 
-- ${{ if startsWith(${{ parameters.target }}, 'x86_64') }}:
+- ${{ if startsWith(parameters.target, 'x86_64') }}:
   - task: APIScan@2
     inputs:
       softwareFolder: ripgrep
