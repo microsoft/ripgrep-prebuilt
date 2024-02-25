@@ -1,3 +1,9 @@
+parameters:
+  - name: publishRipgrep
+    displayName: 🚀 Publish ripgrep
+    type: boolean
+    default: false
+
 jobs:
 - job: linux_64
   pool:
@@ -86,7 +92,7 @@ jobs:
 - job: publish
   pool:
     vmImage: 'ubuntu-latest'
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'), eq('${{ parameters.publishRipgrep }}', 'true'))
   dependsOn:
   - linux_64
   - linux_32

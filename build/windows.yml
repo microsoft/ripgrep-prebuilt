@@ -13,6 +13,7 @@ steps:
     cd ripgrep
     git checkout $TREEISH
   displayName: Clone ripgrep
+
 - powershell: |
     echo $env:reason
     echo $BUILD_SOURCEVERSION
@@ -30,6 +31,7 @@ steps:
     TARGET: ${{ parameters.target }}
     reason: variables['Build.Reason']
   displayName: Install Rust
+
 - powershell: |
     $env:RUSTFLAGS='-C target-feature=+crt-static'
     cargo build --release --target $env:TARGET --features pcre2
@@ -51,6 +53,27 @@ steps:
   env:
     TARGET: ${{ parameters.target }}
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+
+- task: APIScan@2
+  inputs:
+    softwareFolder: ripgrep
+    softwareName: 'ripgrep'
+    softwareVersionNum: '13'
+    isLargeApp: false
+    toolVersion: 'Latest'
+  displayName: Run APIScan
+  condition: succeeded()
+  env:
+    AzureServicesAuthConnectionString: $(apiscan-connectionstring)
+
+- task: PublishSecurityAnalysisLogs@3
+  displayName: Publish security logs
+  inputs:
+    ArtifactName: 'CodeAnalysisLogs'
+    ArtifactType: 'Container'
+    AllTools: true
+    ToolLogsNotFoundAction: 'Standard'
+
 - task: PublishPipelineArtifact@0
   displayName: 'Publish Pipeline Artifact'
   inputs:
