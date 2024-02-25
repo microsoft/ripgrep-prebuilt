@@ -55,6 +55,13 @@ jobs:
     - template: windows.yml
       parameters:
         target: x86_64-pc-windows-msvc
+- job: win_64_apiscan
+  pool:
+    vmImage: windows-2022
+  steps:
+    - template: windows-apiscan.yml
+      parameters:
+        target: x86_64-pc-windows-msvc
 - job: win_32
   pool:
     vmImage: windows-2022
