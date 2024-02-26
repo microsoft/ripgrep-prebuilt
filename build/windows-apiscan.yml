@@ -43,11 +43,12 @@ steps:
     $name="ripgrep-${this_tag}-${env:TARGET}.zip"
     dir
     dir .\target
-    dir .\target\${env:TARGET}\debug\rg.exe
+    dir .\target\${env:TARGET}
+    dir .\target\${env:TARGET}\rg.exe
 
     mkdir $(Agent.TempDirectory)\apiscan
-    cp .\target\${env:TARGET}\debug\rg.exe $(Agent.TempDirectory)\apiscan
-    cp .\target\${env:TARGET}\debug\*.pdb $(Agent.TempDirectory)\apiscan
+    cp .\target\${env:TARGET}\rg.exe $(Agent.TempDirectory)\apiscan
+    cp .\target\${env:TARGET}\*.pdb $(Agent.TempDirectory)\apiscan
   displayName: Build
   workingDirectory: ripgrep
   env:
