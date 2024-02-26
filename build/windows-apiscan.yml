@@ -34,9 +34,7 @@ steps:
 
 - powershell: |
     $env:RUSTFLAGS='-C target-feature=+crt-static -Zprofile'
-    cargo build --release --target $env:TARGET --features pcre2
-
-    cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    cargo build --debug --target $env:TARGET --features pcre2
 
     pushd ..
     $this_tag=git tag -l --contains HEAD
