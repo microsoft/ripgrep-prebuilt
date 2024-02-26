@@ -43,7 +43,9 @@ steps:
     $name="ripgrep-${this_tag}-${env:TARGET}.zip"
     dir
     dir .\target
+    dir .\target\debug
     dir .\target\${env:TARGET}
+    dir .\target\${env:TARGET}\debug
     dir .\target\${env:TARGET}\rg.exe
 
     mkdir $(Agent.TempDirectory)\apiscan
