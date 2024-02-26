@@ -35,6 +35,7 @@ steps:
 - powershell: |
     $env:RUSTFLAGS='-C target-feature=+crt-static -Zprofile'
     cargo build --debug --target $env:TARGET --features pcre2
+    cargo test --target "$TARGET" --debug --verbose --all --features 'pcre2'
 
     pushd ..
     $this_tag=git tag -l --contains HEAD
@@ -43,11 +44,11 @@ steps:
     $name="ripgrep-${this_tag}-${env:TARGET}.zip"
     dir
     dir .\target
-    dir .\target\${env:TARGET}\release\rg.exe
+    dir .\target\${env:TARGET}\debug\rg.exe
 
     mkdir $(Agent.TempDirectory)\apiscan
-    cp .\target\${env:TARGET}\release\rg.exe $(Agent.TempDirectory)\apiscan
-    cp .\target\${env:TARGET}\release\*.pdb $(Agent.TempDirectory)\apiscan
+    cp .\target\${env:TARGET}\debug\rg.exe $(Agent.TempDirectory)\apiscan
+    cp .\target\${env:TARGET}\debug\*.pdb $(Agent.TempDirectory)\apiscan
   displayName: Build
   workingDirectory: ripgrep
   env:
