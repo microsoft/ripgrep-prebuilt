@@ -59,7 +59,7 @@ steps:
   inputs:
     softwareFolder: '$(Agent.TempDirectory)/apiscan'
     softwareName: 'ripgrep'
-    softwareVersionNum: '1.15.x'
+    softwareVersionNum: '1.15'
     isLargeApp: false
     toolVersion: 'Latest'
   displayName: Run APIScan
