@@ -34,6 +34,7 @@ steps:
 
 - powershell: |
     $env:RUSTFLAGS='-C target-feature=+crt-static -Zprofile'
+    $env:CARGO_INCREMENTAL='0'
     cargo build --target $env:TARGET --features pcre2
 
     pushd ..
