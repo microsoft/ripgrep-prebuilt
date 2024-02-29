@@ -58,7 +58,7 @@ steps:
 - task: APIScan@2
   inputs:
     softwareFolder: '$(Agent.TempDirectory)/apiscan'
-    softwareName: 'ripgrep'
+    softwareName: 'vscode-ripgrep-prebuilt'
     softwareVersionNum: '1.15'
     isLargeApp: false
     toolVersion: 'Latest'
