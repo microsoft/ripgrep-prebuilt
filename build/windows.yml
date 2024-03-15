@@ -54,9 +54,9 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
 
-- task: PublishPipelineArtifact@0
+- task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
-    artifactName: $(Name)
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
+    artifactName: $(Name)
   condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))

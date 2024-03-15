@@ -16,125 +16,124 @@ resources:
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
-    pool:
-      name: 1es-windows-2019-x64
-      os: windows
+    sdl:
+      sourceAnalysisPool: 1es-windows-2019-x64
+      tsa:
+        enabled: true
 
   stages:
     - stage: Build
       jobs:
       - job: linux_64
         pool:
-          vmImage: 'ubuntu-latest'
-        templateContext:
-          outputs:
-            - output: pipelineArtifact
-              targetPath: '$(Build.ArtifactStagingDirectory)/drop.zip'
-              artifactName: drop
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: x86_64-unknown-linux-musl
       - job: linux_32
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: i686-unknown-linux-musl
       - job: linux_arm
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: arm-unknown-linux-gnueabihf
       - job: linux_aarch64
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: aarch64-unknown-linux-gnu
       - job: linux_aarch64_musl
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: aarch64-unknown-linux-musl
       - job: macOS
         pool:
+          name: Azure Pipelines
           vmImage: macOS-latest
+          os: macOS
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: x86_64-apple-darwin
       - job: macOS_arm64
         pool:
+          name: Azure Pipelines
           vmImage: macOS-latest
+          os: macOS
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: aarch64-apple-darwin
       - job: win_64
         pool:
-          vmImage: windows-2022
+          name: 1es-windows-2022-x64
         steps:
-          - template: windows.yml@self
+          - template: build/windows.yml@self
             parameters:
               target: x86_64-pc-windows-msvc
       - job: win_64_apiscan
         pool:
-          vmImage: windows-2022
+          name: 1es-windows-2022-x64
         steps:
-          - template: windows-apiscan.yml@self
+          - template: build/windows-apiscan.yml@self
             parameters:
               target: x86_64-pc-windows-msvc
       - job: win_32
         pool:
-          vmImage: windows-2022
+          name: 1es-windows-2022-x64
         steps:
-          - template: windows.yml@self
+          - template: build/windows.yml@self
             parameters:
               target: i686-pc-windows-msvc
       - job: win_arm64
         pool:
-          vmImage: windows-2022
+          name: 1es-windows-2022-x64
         steps:
-          - template: windows.yml@self
+          - template: build/windows.yml@self
             parameters:
               target: aarch64-pc-windows-msvc
       - job: ppc64le
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: powerpc64le-unknown-linux-gnu
       - job: s390x
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         steps:
-          - template: linux.yml@self
+          - template: build/linux.yml@self
             parameters:
               target: s390x-unknown-linux-gnu
+
+    - stage: Publish
+      dependsOn: Build
+      jobs:
       - job: publish
         pool:
-          vmImage: 'ubuntu-latest'
+          name: 1es-ubuntu-22.04-x64
+          os: linux
         condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
-        dependsOn:
-        - linux_64
-        - linux_32
-        - linux_arm
-        - linux_aarch64
-        - linux_aarch64_musl
-        - macOS
-        - macOS_arm64
-        - win_64
-        - win_32
-        - win_arm64
-        - ppc64le
-        - s390x
         steps:
-          - template: publish.yml
+          - template: build/publish.yml@self

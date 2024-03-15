@@ -13,6 +13,7 @@ steps:
     cd ripgrep
     git checkout $TREEISH
   displayName: Clone Ripgrep
+
 - script: |
     set -ex
     for patch in $(node -p "require('../config.json').patches.join(' ')"); do
@@ -21,16 +22,19 @@ steps:
   workingDirectory: ripgrep
   displayName: Apply patches
   condition: succeeded()
+
 - script: build/install.sh
   displayName: Install Rust
   env:
     RUST_VERSION: ${{ parameters.rust_version }}
     TARGET: ${{ parameters.target }}
+
 - script: ../build/build.sh
   displayName: Build
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
+
 - script: ../build/package.sh
   displayName: Package
   workingDirectory: ripgrep
@@ -38,9 +42,10 @@ steps:
     TARGET: ${{ parameters.target }}
     OUT_DIR: $(Build.ArtifactStagingDirectory)
   condition: succeeded()
-- task: PublishPipelineArtifact@0
+
+- task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
-    artifactName: $(Name)
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
+    artifactName: $(Name)
   condition: succeeded()
