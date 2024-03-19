@@ -67,7 +67,7 @@ extends:
         - job: macOS
           pool:
             name: Azure Pipelines
-            name: macOS-latest
+            vmImage: macOS-latest
             os: macOS
           steps:
             - template: build/linux.yml@self
@@ -76,7 +76,7 @@ extends:
         - job: macOS_arm64
           pool:
             name: Azure Pipelines
-            name: macOS-latest
+            vmImage: macOS-latest
             os: macOS
           steps:
             - template: build/linux.yml@self
