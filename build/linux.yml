@@ -51,6 +51,6 @@ steps:
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)
     artifactName: $(Name)
-    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)/$(Name)
-    sbomBuildComponentPath: $(Build.SourcesDirectory)/target/${{ parameters.target }}/release
+    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
+    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep/target/${{ parameters.target }}/release
   condition: succeeded()
