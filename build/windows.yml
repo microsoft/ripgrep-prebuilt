@@ -52,7 +52,7 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: succeeded()
 
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
@@ -61,4 +61,4 @@ steps:
     artifactName: $(Name)
     sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
     sbomBuildComponentPath: $(Build.SourcesDirectory)/target/${{ parameters.target }}/release
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: succeeded()
