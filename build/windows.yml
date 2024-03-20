@@ -52,11 +52,16 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+  condition: succeeded()
 
-- task: PublishPipelineArtifact@0
+- powershell: mkdir $(Build.ArtifactStagingDirectory)/_manifest
+  displayName: Create SBOM drop folder
+
+- task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
-    artifactName: $(Name)
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
-  condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+    artifactName: $(Name)
+    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
+    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep/target/${{ parameters.target }}/release
+  condition: succeeded()

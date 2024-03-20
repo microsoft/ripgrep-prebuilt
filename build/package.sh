@@ -12,7 +12,6 @@ mk_tarball() {
     this_tag=`git tag -l --contains HEAD`
     popd
     local name="ripgrep-${this_tag}-${TARGET}.tar.gz"
-    
 
     tar czvf "$OUT_DIR/$name" -C ./target/$TARGET/release rg
     echo "##vso[task.setvariable variable=Name]$name"
