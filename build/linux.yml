@@ -43,10 +43,13 @@ steps:
     OUT_DIR: $(Build.ArtifactStagingDirectory)
   condition: succeeded()
 
+- script: mkdir $(Build.ArtifactStagingDirectory)/_manifest
+  displayName: Create SBOM drop folder
+
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
+    targetPath: $(Build.ArtifactStagingDirectory)
     artifactName: $(Name)
     sbomBuildDropPath: $(Build.ArtifactStagingDirectory)/$(Name)
     sbomBuildComponentPath: $(Build.SourcesDirectory)/target/${{ parameters.target }}/release
