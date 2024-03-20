@@ -48,6 +48,6 @@ steps:
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
     artifactName: $(Name)
-    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
+    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)/$(Name)
     sbomBuildComponentPath: $(Build.SourcesDirectory)/target/${{ parameters.target }}/release
   condition: succeeded()
