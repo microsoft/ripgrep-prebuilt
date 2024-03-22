@@ -18,6 +18,8 @@ extends:
   parameters:
     sdl:
       sourceAnalysisPool: 1es-oss-windows-2022-x64
+      binskim:
+        analyzeTargetGlob: '$(Build.SourcesDirectory)/ripgrep/target/**/rg.exe'
       tsa:
         enabled: true
 
