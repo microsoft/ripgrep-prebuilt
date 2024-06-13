@@ -33,7 +33,6 @@ steps:
   displayName: Install Rust
 
 - powershell: |
-    $env:RUSTFLAGS='-Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-args=/CETCOMPAT'
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
@@ -52,6 +51,7 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
+    RUST_FLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-args='/CETCOMPAT /DYNAMICBASE /sdl'
   condition: succeeded()
 
 - powershell: mkdir $(Build.ArtifactStagingDirectory)/_manifest
