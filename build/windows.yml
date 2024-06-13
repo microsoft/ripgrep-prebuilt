@@ -33,7 +33,7 @@ steps:
   displayName: Install Rust
 
 - powershell: |
-    $env:RUSTFLAGS='-Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-args=/DYNAMICBASE /CETCOMPAT'
+    $env:RUSTFLAGS='-Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-args=/DYNAMICBASE/CETCOMPAT'
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
