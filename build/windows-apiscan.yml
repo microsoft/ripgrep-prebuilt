@@ -33,7 +33,7 @@ steps:
   displayName: Install Rust
 
 - powershell: |
-    $env:RUSTFLAGS='-C target-feature=+crt-static -Zprofile'
+    $env:RUSTFLAGS='-C target-feature=+crt-static -Zprofile -Z control-flow-guard'
     $env:CARGO_INCREMENTAL='0'
     cargo build --target $env:TARGET --features pcre2
 
