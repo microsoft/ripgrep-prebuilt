@@ -51,7 +51,7 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-    RUSTFLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -C link-args=/CETCOMPAT /DYNAMICBASE /sdl
+    RUSTFLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-arg=/CETCOMPAT -Clink-arg=/DYNAMICBASE -Clink-arg=/sdl"
   condition: succeeded()
 
 - powershell: mkdir $(Build.ArtifactStagingDirectory)/_manifest
