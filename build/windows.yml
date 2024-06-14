@@ -15,7 +15,7 @@ steps:
   displayName: Clone ripgrep
 
 - powershell: |
-    $patches = node -p "require('../config.json').patches.join(' ')"
+    $patches = node -p "require('../config.json').patches" | ConvertFrom-Json
     foreach ($patch in $patches) {
       git apply --ignore-whitespace --ignore-space-change ../patches/$patch
     }
