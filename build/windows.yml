@@ -30,6 +30,10 @@ steps:
     additionalTargets: ${{ parameters.target }}
   displayName: Install Rust toolchain
 
+- task: CargoAuthenticate@0
+  inputs:
+    configFile: '.cargo/config.toml'
+
 # - powershell: |
 #     echo $env:reason
 #     echo $BUILD_SOURCEVERSION
@@ -47,6 +51,7 @@ steps:
 #   displayName: msrustup
 
 - powershell: |
+    $env:CFLAGS="/guard:cf /Qspectre"
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
