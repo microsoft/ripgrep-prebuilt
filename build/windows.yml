@@ -34,22 +34,6 @@ steps:
   inputs:
     configFile: 'ripgrep/.cargo/config.toml'
 
-# - powershell: |
-#     echo $env:reason
-#     echo $BUILD_SOURCEVERSION
-#     $env:PATH+=";C:\Users\appveyor\.cargo\bin"
-
-#     msrustup default $env:RUST_VERSION
-#     rustc -V
-#     cargo -V
-
-#     msrustup target add $env:TARGET
-#   env:
-#     RUST_VERSION: ${{ parameters.rust_version }}
-#     TARGET: ${{ parameters.target }}
-#     reason: variables['Build.Reason']
-#   displayName: msrustup
-
 - powershell: |
     $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /W3"
     cargo build --release --target $env:TARGET --features pcre2
