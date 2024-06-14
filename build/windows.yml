@@ -27,7 +27,7 @@ steps:
   inputs:
     rustVersion: ${{ parameters.rust_version }}
     toolchainFeed: https://pkgs.dev.azure.com/vscode/_packaging/RustTools/nuget/v3/index.json
-    additionalRustTargets: ${{ parameters.target }}
+    additionalTargets: ${{ parameters.target }}
   displayName: Install Rust toolchain
 
 # - powershell: |
