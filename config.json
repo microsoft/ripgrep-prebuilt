@@ -4,7 +4,6 @@
     "patches": [
         "0001-feat-pass-env-for-aarch64-unknown-linux-musl-via-cross.patch",
         "0002-msvc-spectre-libs.patch",
-        "0003-windows-rust-flags.patch",
-        "0004-rust-toolchain.patch"
+        "0003-windows-rust-flags.patch"
     ]
 }
