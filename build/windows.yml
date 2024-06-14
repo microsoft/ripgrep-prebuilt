@@ -23,23 +23,27 @@ steps:
   displayName: Apply patches
   condition: succeeded()
 
-- powershell: |
-    echo $env:reason
-    echo $BUILD_SOURCEVERSION
-    Invoke-WebRequest https://win.rustup.rs -UseBasicParsing -OutFile rustup-init.exe
-    .\rustup-init.exe -y
-    $env:PATH+=";C:\Users\appveyor\.cargo\bin"
+- task: RustInstaller@1
+  inputs:
+    toolchainFeed: https://pkgs.dev.azure.com/vscode/_packaging/RustTools/nuget/v3/index.json
+    additionalRustTargets: ${{ parameters.target }}
+  displayName: Install Rust toolchain
 
-    rustup default $env:RUST_VERSION
-    rustc -V
-    cargo -V
+# - powershell: |
+#     echo $env:reason
+#     echo $BUILD_SOURCEVERSION
+#     $env:PATH+=";C:\Users\appveyor\.cargo\bin"
 
-    rustup target add $env:TARGET
-  env:
-    RUST_VERSION: ${{ parameters.rust_version }}
-    TARGET: ${{ parameters.target }}
-    reason: variables['Build.Reason']
-  displayName: Install Rust
+#     msrustup default $env:RUST_VERSION
+#     rustc -V
+#     cargo -V
+
+#     msrustup target add $env:TARGET
+#   env:
+#     RUST_VERSION: ${{ parameters.rust_version }}
+#     TARGET: ${{ parameters.target }}
+#     reason: variables['Build.Reason']
+#   displayName: msrustup
 
 - powershell: |
     cargo build --release --target $env:TARGET --features pcre2
