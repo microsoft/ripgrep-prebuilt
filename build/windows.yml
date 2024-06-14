@@ -15,6 +15,15 @@ steps:
   displayName: Clone ripgrep
 
 - powershell: |
+    $patches = node -p "require('../config.json').patches.join(' ')"
+    foreach ($patch in $patches) {
+      git apply --ignore-whitespace --ignore-space-change ../patches/$patch
+    }
+  workingDirectory: ripgrep
+  displayName: Apply patches
+  condition: succeeded()
+
+- powershell: |
     echo $env:reason
     echo $BUILD_SOURCEVERSION
     Invoke-WebRequest https://win.rustup.rs -UseBasicParsing -OutFile rustup-init.exe
@@ -51,7 +60,10 @@ steps:
   workingDirectory: ripgrep
   env:
     TARGET: ${{ parameters.target }}
-    RUSTFLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-arg=/CETCOMPAT -Clink-arg=/DYNAMICBASE -Clink-arg=/sdl"
+    ${{ if eq(parameters.target, 'aarch64-pc-windows-msvc') }}:
+      RUSTFLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-arg=/DYNAMICBASE
+    ${{ else }}:
+      RUSTFLAGS: -Ctarget-feature=+crt-static -Ccontrol-flow-guard -Clink-arg=/CETCOMPAT -Clink-arg=/DYNAMICBASE -Clink-arg=/sdl"
   condition: succeeded()
 
 - powershell: mkdir $(Build.ArtifactStagingDirectory)/_manifest
