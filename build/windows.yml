@@ -32,9 +32,7 @@ steps:
 
 - task: CargoAuthenticate@0
   inputs:
-    configFile: '.cargo/config.toml'
-  workingDirectory: ripgrep
-
+    configFile: 'ripgrep/.cargo/config.toml'
 
 # - powershell: |
 #     echo $env:reason
