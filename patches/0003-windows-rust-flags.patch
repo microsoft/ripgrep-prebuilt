@@ -27,5 +27,5 @@ index 7db936b..17a3deb 100644
 +]
 +
 +# -Clink-args=/DYNAMICBASE /CETCOMPAT: Enable "shadow stack" (https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat)
-+[target.'cfg(all(target_os = "windows", any(target_arch = "i686", target_arch = "x86_64")))']
++[target.'cfg(all(target_os = "windows", any(target_arch = "i686", target_arch = "x86_64", target_arch = "x86")))']
 +rustflags = ["-Clink-args=/DYNAMICBASE /CETCOMPAT /sdl"]
