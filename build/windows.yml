@@ -2,7 +2,7 @@
 
 parameters:
   target: ''
-  rust_version: 'stable'
+  rust_version: 'ms-stable'
 
 steps:
 - powershell: |
@@ -15,25 +15,27 @@ steps:
   displayName: Clone ripgrep
 
 - powershell: |
-    echo $env:reason
-    echo $BUILD_SOURCEVERSION
-    Invoke-WebRequest https://win.rustup.rs -UseBasicParsing -OutFile rustup-init.exe
-    .\rustup-init.exe -y
-    $env:PATH+=";C:\Users\appveyor\.cargo\bin"
+    $patches = node -p "require('../config.json').patches" | ConvertFrom-Json
+    foreach ($patch in $patches) {
+      git apply --ignore-whitespace --ignore-space-change ../patches/$patch
+    }
+  workingDirectory: ripgrep
+  displayName: Apply patches
+  condition: succeeded()
 
-    rustup default $env:RUST_VERSION
-    rustc -V
-    cargo -V
+- task: RustInstaller@1
+  inputs:
+    rustVersion: ${{ parameters.rust_version }}
+    toolchainFeed: https://pkgs.dev.azure.com/vscode/_packaging/RustTools/nuget/v3/index.json
+    additionalTargets: ${{ parameters.target }}
+  displayName: Install Rust toolchain
 
-    rustup target add $env:TARGET
-  env:
-    RUST_VERSION: ${{ parameters.rust_version }}
-    TARGET: ${{ parameters.target }}
-    reason: variables['Build.Reason']
-  displayName: Install Rust
+- task: CargoAuthenticate@0
+  inputs:
+    configFile: 'ripgrep/.cargo/config.toml'
 
 - powershell: |
-    $env:RUSTFLAGS='-C target-feature=+crt-static'
+    $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /W3"
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'

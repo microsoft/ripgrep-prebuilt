@@ -1,0 +1,31 @@
+diff --git a/.cargo/config.toml b/.cargo/config.toml
+index 7db936b..17a3deb 100644
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -1,8 +1,18 @@
+-# On Windows MSVC, statically link the C runtime so that the resulting EXE does
+-# not depend on the vcruntime DLL.
+-#
+-# See: https://github.com/BurntSushi/ripgrep/pull/1613
+-[target.x86_64-pc-windows-msvc]
+-rustflags = ["-C", "target-feature=+crt-static"]
+-[target.i686-pc-windows-msvc]
+-rustflags = ["-C", "target-feature=+crt-static"]
++[source.crates-io]
++replace-with = 'ms-crates-io'
++
++[registries.ms-crates-io]
++index = "sparse+https://pkgs.dev.azure.com/vscode/_packaging/crates/Cargo/index/"
++
++# -Ccontrol-flow-guard: Enable Control Flow Guard, needed for OneBranch's post-build analysis (https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard).
++# -Ctarget-feature=+crt-static: Statically link the CRT (required to link the spectre-mitigated CRT).
++[target.'cfg(target_os = "windows")']
++rustflags = [
++    "-Cehcont_guard",
++    "-Ccontrol-flow-guard",
++    "-Ctarget-feature=+crt-static",
++]
++
++# -Clink-args=/DYNAMICBASE /CETCOMPAT: Enable "shadow stack" (https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat)
++[target.'cfg(all(target_os = "windows", any(target_arch = "i686", target_arch = "x86_64", target_arch = "x86")))']
++rustflags = ["-Clink-args=/DYNAMICBASE /CETCOMPAT /sdl"]
