@@ -41,15 +41,9 @@ extends:
               name: generateArtifactPrefix
             - powershell: |
                 gci env:
-                Write-Host $env:ARTIFACT_PREFIX
-                Write-Host $(ARTIFACT_PREFIX)
-                Write-Host $(generateArtifactPrefix.ARTIFACT_PREFIX)
               displayName: Debug output variable
             - script: |
                 env
-                echo $ARTIFACT_PREFIX
-                echo $(ARTIFACT_PREFIX)
-                echo $(generateArtifactPrefix.ARTIFACT_PREFIX)
               displayName: Debug output variable
         - job: sandbox2
           dependsOn: sandbox1
@@ -62,9 +56,9 @@ extends:
           steps:
             - powershell: |
                 gci env:
-                Write-Host $env:ARTIFACT_PREFIX
-                Write-Host $(ARTIFACT_PREFIX)
-                Write-Host $(generateArtifactPrefix.ARTIFACT_PREFIX)
+              displayName: Debug output variable
+            - script: |
+                env
               displayName: Debug output variable
         - job: linux_64
           pool:
