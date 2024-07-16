@@ -49,7 +49,7 @@ extends:
           dependsOn: sandbox1
           variables:
             - name: ARTIFACT_PREFIX
-              value: $[ dependencies.Windows.outputs['generateArtifactPrefix.ARTIFACT_PREFIX'] ]
+              value: $[ dependencies.sandbox1.outputs['generateArtifactPrefix.ARTIFACT_PREFIX'] ]
           pool:
             name: 1es-oss-windows-2022-x64
             os: windows
