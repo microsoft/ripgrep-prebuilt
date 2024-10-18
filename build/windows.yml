@@ -56,14 +56,12 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
-- powershell: mkdir $(Build.ArtifactStagingDirectory)/_manifest
-  displayName: Create SBOM drop folder
-
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
     targetPath: $(Build.ArtifactStagingDirectory)/$(Name)
     artifactName: $(Name)
     sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
-    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep/target/${{ parameters.target }}/release
+    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep
+    sbomPackageName: "ripgrep-prebuilt (${{ parameters.target }})"
   condition: succeeded()
