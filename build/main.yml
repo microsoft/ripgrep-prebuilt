@@ -176,6 +176,5 @@ extends:
             - input: pipelineArtifact
               artifactName: ripgrep--x86_64-unknown-linux-musl.tar.gz
               targetPath: $(Build.ArtifactStagingDirectory)
-          condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
           steps:
             - template: build/publish.yml@self
