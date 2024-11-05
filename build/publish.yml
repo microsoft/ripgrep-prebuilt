@@ -1,7 +1,4 @@
 steps:
-- task: DownloadPipelineArtifact@2
-  inputs:
-    path: '$(System.ArtifactsDirectory)'
 - task: GitHubRelease@1
   inputs:
     gitHubConnection: github.com_oauth
@@ -10,6 +7,7 @@ steps:
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: '$(Build.SourceBranchName)'
-    assets: '$(System.ArtifactsDirectory)/**'
+    assets: '$(Build.ArtifactStagingDirectory)/**/ripgrep--*.*'
     assetUploadMode: 'replace'
     addChangeLog: true
+  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')

@@ -136,6 +136,45 @@ extends:
           pool:
             name: 1es-oss-ubuntu-22.04-x64
             os: linux
-          condition: and(succeeded(), startsWith(variables['Build.SourceBranch'], 'refs/tags/v'))
+          templateContext:
+            type: releaseJob
+            isProduction: true
+            inputs:
+            - input: pipelineArtifact
+              artifactName: ripgrep--aarch64-apple-darwin.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--aarch64-apple-darwin.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--aarch64-pc-windows-msvc.zip
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--aarch64-pc-windows-msvc.zip
+            - input: pipelineArtifact
+              artifactName: ripgrep--aarch64-unknown-linux-gnu.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--aarch64-unknown-linux-gnu.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--aarch64-unknown-linux-musl.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--aarch64-unknown-linux-musl.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--arm-unknown-linux-gnueabihf.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--arm-unknown-linux-gnueabihf.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--i686-pc-windows-msvc.zip
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--i686-pc-windows-msvc.zip
+            - input: pipelineArtifact
+              artifactName: ripgrep--i686-unknown-linux-musl.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--i686-unknown-linux-musl.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--powerpc64le-unknown-linux-gnu.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--powerpc64le-unknown-linux-gnu.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--s390x-unknown-linux-gnu.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--s390x-unknown-linux-gnu.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--x86_64-apple-darwin.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--x86_64-apple-darwin.tar.gz
+            - input: pipelineArtifact
+              artifactName: ripgrep--x86_64-pc-windows-msvc.zip
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--x86_64-pc-windows-msvc.zip
+            - input: pipelineArtifact
+              artifactName: ripgrep--x86_64-unknown-linux-musl.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep--x86_64-unknown-linux-musl.tar.gz
           steps:
             - template: build/publish.yml@self
