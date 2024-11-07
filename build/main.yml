@@ -91,13 +91,6 @@ extends:
             - template: build/windows.yml@self
               parameters:
                 target: x86_64-pc-windows-msvc
-        # - job: win_64_apiscan
-        #   pool:
-        #     name: 1es-oss-windows-2022-x64
-        #   steps:
-        #     - template: build/windows-apiscan.yml@self
-        #       parameters:
-        #         target: x86_64-pc-windows-msvc
         - job: win_32
           pool:
             name: 1es-oss-windows-2022-x64
