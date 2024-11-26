@@ -41,6 +41,9 @@ architecture() {
         powerpc64le-unknown-linux-gnu)
             echo ppc64le
             ;;
+        riscv64gc-unknown-linux-gnu)
+            echo riscv64
+            ;;
         s390x-unknown-linux-gnu)
             echo s390x
             ;;
@@ -60,6 +63,9 @@ gcc_prefix() {
             ;;
         ppc64le)
             echo  powerpc64le-linux-gnu-
+	        ;;
+        riscv64)
+            echo  riscv64-linux-gnu-
 	        ;;
         s390x)
             echo s390x-linux-gnu-
@@ -122,6 +128,13 @@ is_arm64() {
 is_ppc64le() {
     case "$(architecture)" in
         ppc64le) return 0 ;;
+        *)       return 1 ;;
+    esac
+}	
+
+is_riscv64() {
+    case "$(architecture)" in
+        riscv64) return 0 ;;
         *)       return 1 ;;
     esac
 }	
