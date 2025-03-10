@@ -38,7 +38,7 @@ steps:
     $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /sdl"
     cargo build --release --target $env:TARGET --features pcre2
 
-    cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    cargo test --target "$env:TARGET" --release --verbose --all --features 'pcre2'
 
     pushd ..
     $this_tag=git tag -l --contains HEAD
