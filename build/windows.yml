@@ -61,8 +61,8 @@ steps:
     InputType: Basic
     Function: analyze
     TargetPattern: guardianGlob
-    AnalyzeTargetGlob: $(Build.SourcesDirectory)/ripgrep/target/${env:TARGET}/release/rg.exe
-    AnalyzeSymPath: $(Build.SourcesDirectory)/ripgrep/target/${env:TARGET}/release/rg.pdb
+    AnalyzeTargetGlob: $(Build.SourcesDirectory)/ripgrep/target/${{ parameters.target }}/release/rg.exe
+    AnalyzeSymPath: $(Build.SourcesDirectory)/ripgrep/target/${{ parameters.target }}/release
   displayName: Run BinSkim
 
 - task: 1ES.PublishPipelineArtifact@1
