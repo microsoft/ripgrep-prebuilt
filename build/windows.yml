@@ -56,6 +56,15 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
+- task: BinSkim@4
+  inputs:
+    InputType: Basic
+    Function: analyze
+    TargetPattern: guardianGlob
+    AnalyzeTargetGlob: $(Build.SourcesDirectory)/ripgrep/target/${env:TARGET}/release/rg.exe
+    AnalyzeSymPath: $(Build.SourcesDirectory)/ripgrep/target/${env:TARGET}/release/rg.pdb
+  displayName: Run BinSkim
+
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
