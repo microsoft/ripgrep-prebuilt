@@ -35,7 +35,7 @@ steps:
     configFile: 'ripgrep/.cargo/config.toml'
 
 - powershell: |
-    $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /W3"
+    # $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /W3"
     cargo build --release --target $env:TARGET --features pcre2
 
     cargo test --target $env:TARGET --release --verbose --all --features 'pcre2'
