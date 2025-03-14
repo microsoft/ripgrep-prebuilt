@@ -18,7 +18,7 @@ main() {
     elif is_s390x; then
         "$CARGO" build --release --target=$TARGET
     elif is_aarch64_musl; then
-        # force jemalloc to allow 16K page sizes for linux musl 
+        # force jemalloc to allow 16K page sizes for linux musl
         # https://github.com/microsoft/ripgrep-prebuilt/issues/26
         JEMALLOC_SYS_WITH_LG_PAGE=16 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     else
@@ -42,7 +42,7 @@ main() {
 
     # Apparently tests don't work on arm, s390x and ppc64le so just bail now. I guess we provide
     # ARM, ppc64le and s390x releases on a best effort basis?
-    if is_arm || is_aarch64 || is_arm64 || is_ppc64le || is_s390x; then
+    if is_arm || is_arm64 || is_ppc64le || is_s390x; then
       return 0
     fi
 
