@@ -24,26 +24,47 @@ steps:
   displayName: Apply patches
   condition: succeeded()
 
-- script: build/install.sh
-  displayName: Install Rust
-  env:
-    RUST_VERSION: ${{ parameters.rust_version }}
-    TARGET: ${{ parameters.target }}
-    USE_MARINER: ${{ parameters.use_mariner }}
+- ${{ if eq(parameters.use_mariner, true) }}:
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '27.0.3'
+  
+  - task: Bash@3
+    displayName: Build
+    env:
+      CURRENTDIR: $(Build.SourcesDirectory)/build
+      DOCKERCMD: >
+        apk add --no-cache musl-dev &&
+        build/install.sh &&
+        cd ripgrep && ../build/build.sh && ../build/package.sh
+      RUST_VERSION: ${{ parameters.rust_version }}
+      USE_MARINER: ${{ parameters.use_mariner }}
+      TARGET: ${{ parameters.target }}
+      OUT_DIR: $(Build.ArtifactStagingDirectory)
+    inputs:
+      targetType: 'inline'
+      script: |
+          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/build --workdir /build mcr.microsoft.com/devcontainers/base:alpine-3.18 /bin/sh -c "${DOCKERCMD}"
+- ${{ else }}:
+  - script: build/install.sh
+    displayName: Install Rust
+    env:
+      RUST_VERSION: ${{ parameters.rust_version }}
+      TARGET: ${{ parameters.target }}
 
-- script: ../build/build.sh
-  displayName: Build
-  workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
+  - script: ../build/build.sh
+    displayName: Build
+    workingDirectory: ripgrep
+    env:
+      TARGET: ${{ parameters.target }}
 
-- script: ../build/package.sh
-  displayName: Package
-  workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
-    OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: succeeded()
+  - script: ../build/package.sh
+    displayName: Package
+    workingDirectory: ripgrep
+    env:
+      TARGET: ${{ parameters.target }}
+      OUT_DIR: $(Build.ArtifactStagingDirectory)
+    condition: succeeded()
 
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
