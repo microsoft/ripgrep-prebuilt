@@ -50,8 +50,9 @@ install_linux_dependencies() {
     
     if [ "${USE_MARINER}" = 'true' ]; then
         sudo tdnf update -y
-        sudo tdnf install -y musl-devel
+        sudo tdnf install -y musl-devel musl-gcc
         sudo tdnf install -y gcc-aarch64-linux-gnu
+        return
     fi
 
     sudo apt-get update
