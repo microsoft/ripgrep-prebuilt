@@ -48,7 +48,7 @@ install_linux_dependencies() {
         return
     fi
     installer='apt-get'
-    if [ USE_MARINER = 'true' ]; then
+    if [ "${USE_MARINER}" = 'true' ]; then
         installer='tdnf'
     fi
     sudo "${installer}" update
