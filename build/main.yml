@@ -44,22 +44,20 @@ extends:
                 target: i686-unknown-linux-musl
         - job: linux_arm
           pool:
-            name: 1es-oss-mariner-2.0-arm64
+            name: 1es-oss-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
               parameters:
                 target: arm-unknown-linux-gnueabihf
-                use_mariner: true
         - job: linux_aarch64
           pool:
-            name: 1es-oss-mariner-2.0-arm64
+            name: 1es-oss-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
               parameters:
                 target: aarch64-unknown-linux-gnu
-                use_mariner: true
         - job: linux_aarch64_musl
           pool:
             name: 1es-oss-mariner-2.0-arm64

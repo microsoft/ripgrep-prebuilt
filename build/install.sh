@@ -47,30 +47,33 @@ install_linux_dependencies() {
     if ! is_linux; then
         return
     fi
-    installer='apt-get'
+    
     if [ "${USE_MARINER}" = 'true' ]; then
-        installer='tdnf'
+        sudo tdnf update -y
+        sudo tdnf install -y musl-devel
+        sudo tdnf install -y gcc-aarch64-linux-gnu
     fi
-    sudo "${installer}" update -y
-    sudo "${installer}" install -y musl-tools
+
+    sudo apt-get update
+    sudo apt-get install -y musl-tools
 
     if is_arm; then
-        sudo "${installer}" install -y gcc-arm-linux-gnueabihf
-        sudo "${installer}" install -y binutils-arm-linux-gnueabihf
-        sudo "${installer}" install -y libc6-armhf-cross
-        sudo "${installer}" install -y libc6-dev-armhf-cross
+        sudo apt-get install -y gcc-arm-linux-gnueabihf
+        sudo apt-get install -y binutils-arm-linux-gnueabihf
+        sudo apt-get install -y libc6-armhf-cross
+        sudo apt-get install -y libc6-dev-armhf-cross
     fi
 
     if is_aarch64; then
-        sudo "${installer}" install -y gcc-aarch64-linux-gnu
+        sudo apt-get install -y gcc-aarch64-linux-gnu
     fi
 
     if is_ppc64le; then
-        sudo "${installer}" install -y gcc-powerpc64le-linux-gnu
+        sudo apt-get install -y gcc-powerpc64le-linux-gnu
     fi
 
     if is_s390x; then
-        sudo "${installer}" install -y gcc-s390x-linux-gnu
+        sudo apt-get install -y gcc-s390x-linux-gnu
     fi
 }
 
