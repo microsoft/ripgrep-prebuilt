@@ -3,6 +3,7 @@ parameters:
   rust_version: '1.76.0'
   repo: ''
   tag: ''
+  use_mariner: false
 
 steps:
 - script: |
@@ -28,6 +29,7 @@ steps:
   env:
     RUST_VERSION: ${{ parameters.rust_version }}
     TARGET: ${{ parameters.target }}
+    USE_MARINER: ${{ parameters.use_mariner }}
 
 - script: ../build/build.sh
   displayName: Build

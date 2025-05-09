@@ -50,6 +50,7 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: arm-unknown-linux-gnueabihf
+                use_mariner: true
         - job: linux_aarch64
           pool:
             name: 1es-oss-mariner-2.0-arm64
@@ -58,6 +59,7 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: aarch64-unknown-linux-gnu
+                use_mariner: true
         - job: linux_aarch64_musl
           pool:
             name: 1es-oss-mariner-2.0-arm64
@@ -66,6 +68,7 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: aarch64-unknown-linux-musl
+                use_mariner: true
         - job: macOS
           pool:
             name: Azure Pipelines
