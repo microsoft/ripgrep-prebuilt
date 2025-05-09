@@ -148,10 +148,5 @@ is_osx() {
 }
 
 builder() {
-    if is_musl && is_aarch64_musl; then
-        cargo install cross --version 0.2.4
-        echo "cross"
-    else
-        echo "cargo"
-    fi
+    echo "cargo"
 }
