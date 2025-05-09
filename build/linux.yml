@@ -38,14 +38,10 @@ steps:
         apk add --no-cache musl-dev &&
         ./install.sh &&
         cd ripgrep && ../build.sh && ../package.sh
-      RUST_VERSION: ${{ parameters.rust_version }}
-      USE_MARINER: ${{ parameters.use_mariner }}
-      TARGET: ${{ parameters.target }}
-      OUT_DIR: $(Build.ArtifactStagingDirectory)
     inputs:
       targetType: 'inline'
       script: |
-          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/build --workdir /build mcr.microsoft.com/devcontainers/base:alpine-3.18 /bin/sh -c "${DOCKERCMD}"
+          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/build --workdir /build --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" mcr.microsoft.com/devcontainers/base:alpine-3.18 /bin/sh -c "${DOCKERCMD}"
 - ${{ else }}:
   - script: build/install.sh
     displayName: Install Rust
