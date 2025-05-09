@@ -35,8 +35,8 @@ steps:
       CURRENTDIR: $(Build.SourcesDirectory)/build
       DOCKERCMD: >
         apk add --no-cache musl-dev &&
-        build/install.sh &&
-        cd ripgrep && ../build/build.sh && ../build/package.sh
+        install.sh &&
+        cd ripgrep && ../build.sh && ../package.sh
       RUST_VERSION: ${{ parameters.rust_version }}
       USE_MARINER: ${{ parameters.use_mariner }}
       TARGET: ${{ parameters.target }}
