@@ -51,7 +51,7 @@ install_linux_dependencies() {
     if [ "${USE_MARINER}" = 'true' ]; then
         installer='tdnf'
     fi
-    sudo "${installer}" update
+    sudo "${installer}" update -y
     sudo "${installer}" install -y musl-tools
 
     if is_arm; then
