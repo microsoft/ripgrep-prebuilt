@@ -20,7 +20,8 @@ main() {
     elif is_aarch64_musl; then
         # force jemalloc to allow 16K page sizes for linux musl
         # https://github.com/microsoft/ripgrep-prebuilt/issues/26
-        JEMALLOC_SYS_WITH_LG_PAGE=16 "$CARGO" build --target "$TARGET" --release --features 'pcre2' -Zunstable-options -Clinker-flavor=gnu-lld-cc 
+        RUSTFLAGS='-Zunstable-options -Clinker-flavor=gnu-lld-cc'
+        JEMALLOC_SYS_WITH_LG_PAGE=16 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
