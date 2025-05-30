@@ -35,7 +35,7 @@ steps:
       CURRENTDIR: $(Build.SourcesDirectory)
       DOCKERCMD: >
         echo $(pwd) &&
-        apk add --no-cache musl-dev lld &&
+        apk add --no-cache musl-dev lld file &&
         ./build/install.sh &&
         cd ripgrep && ../build/build.sh && ../build/package.sh
     inputs:
