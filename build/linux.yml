@@ -35,7 +35,7 @@ steps:
       CURRENTDIR: $(Build.SourcesDirectory)
       DOCKERCMD: >
         echo $(pwd) &&
-        apk add --no-cache musl-dev &&
+        apk add --no-cache musl-dev lld rust cargo &&
         ./build/install.sh &&
         cd ripgrep && ../build/build.sh && ../build/package.sh
     inputs:

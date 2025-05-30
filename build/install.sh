@@ -11,12 +11,12 @@ set -ex
 . "$(dirname $0)/utils.sh"
 
 install_rustup() {
-    if (cat /etc/os-release | grep -q alpine); then
-        apk add --no-cache rustup
-    else
-        curl https://sh.rustup.rs -sSf \
-        | sh -s -- -y --default-toolchain="$RUST_VERSION"
+    if [ "${USE_MARINER}" = 'true' ]; then
+        return
     fi
+    
+    curl https://sh.rustup.rs -sSf \
+    | sh -s -- -y --default-toolchain="$RUST_VERSION"
 
     # Linux
     if [ -f /usr/local/cargo/env ]; then
@@ -82,7 +82,7 @@ install_linux_dependencies() {
 configure_cargo() {
     local prefix=$(gcc_prefix)
 
-    if [ -n "${prefix}" ]; then
+    if [ -n "${prefix}" ] && [ "${USE_MARINER}" = 'true' ]; then
         local gcc="${prefix}gcc"
 
         # information about the cross compiler
