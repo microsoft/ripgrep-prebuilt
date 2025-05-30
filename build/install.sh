@@ -11,8 +11,12 @@ set -ex
 . "$(dirname $0)/utils.sh"
 
 install_rustup() {
-    curl https://sh.rustup.rs -sSf \
-      | sh -s -- -y --default-toolchain="$RUST_VERSION"
+    if (cat /etc/os-release | grep -q alpine); then
+        apk add --no-cache rustup
+    else
+        curl https://sh.rustup.rs -sSf \
+        | sh -s -- -y --default-toolchain="$RUST_VERSION"
+    fi
 
     # Linux
     if [ -f /usr/local/cargo/env ]; then
