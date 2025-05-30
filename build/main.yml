@@ -62,6 +62,7 @@ extends:
           pool:
             name: 1es-oss-mariner-2.0-arm64
             os: linux
+            hostArchitecture: Arm64
           steps:
             - template: build/linux.yml@self
               parameters:
