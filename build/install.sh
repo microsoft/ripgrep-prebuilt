@@ -95,6 +95,11 @@ EOF
     
     override_debug
 
+    cat >> ~/.cargo/config.toml <<EOF
+[registry]
+global-credential-providers = ["cargo:token", "cargo:libsecret", "cargo:macos-keychain", "cargo:wincred"]
+EOF
+
     cat >> ripgrep/.cargo/config.toml <<EOF
 
 [profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
