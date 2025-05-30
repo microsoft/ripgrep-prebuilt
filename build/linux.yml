@@ -41,7 +41,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/app --workdir /app --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" mcr.microsoft.com/devcontainers/base:alpine-3.18 /bin/sh -c "${DOCKERCMD}"
+          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/app --workdir /app --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" mcr.microsoft.com/devcontainers/base:alpine-3.19 /bin/sh -c "${DOCKERCMD}"
 - ${{ else }}:
   - script: build/install.sh
     displayName: Install Rust
