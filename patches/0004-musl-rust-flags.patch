@@ -12,4 +12,4 @@ index 7db936b..1002fed 100644
 -[target.i686-pc-windows-msvc]
 -rustflags = ["-C", "target-feature=+crt-static"]
 +[target.aarch64-unknown-linux-musl]
-+rustflags = ["-Clinker=rust-lld"]
++rustflags = ["-Clink-arg=-fuse-ld=lld"]
