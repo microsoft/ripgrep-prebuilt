@@ -37,7 +37,7 @@ steps:
         echo $(pwd) &&
         apk add --no-cache musl-dev lld file &&
         ./build/install.sh &&
-        cd ripgrep && ../build/build.sh && ../build/package.sh
+        cd ripgrep && ../build/build.sh
     inputs:
       targetType: 'inline'
       script: |
@@ -55,13 +55,13 @@ steps:
     env:
       TARGET: ${{ parameters.target }}
 
-  - script: ../build/package.sh
-    displayName: Package
-    workingDirectory: ripgrep
-    env:
-      TARGET: ${{ parameters.target }}
-      OUT_DIR: $(Build.ArtifactStagingDirectory)
-    condition: succeeded()
+- script: ../build/package.sh
+  displayName: Package
+  workingDirectory: ripgrep
+  env:
+    TARGET: ${{ parameters.target }}
+    OUT_DIR: $(Build.ArtifactStagingDirectory)
+  condition: succeeded()
 
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
