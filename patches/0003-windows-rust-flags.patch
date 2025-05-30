@@ -11,11 +11,11 @@ index 7db936b..17a3deb 100644
 -rustflags = ["-C", "target-feature=+crt-static"]
 -[target.i686-pc-windows-msvc]
 -rustflags = ["-C", "target-feature=+crt-static"]
-+[source.crates-io]
-+replace-with = 'ms-crates-io'
++[registries]
++crates@Local = { index = "sparse+https://pkgs.dev.azure.com/vscode/_packaging/crates%40Local/Cargo/index/" }
 +
-+[registries.ms-crates-io]
-+index = "sparse+https://pkgs.dev.azure.com/vscode/_packaging/crates/Cargo/index/"
++[source.crates-io]
++replace-with = "crates@Local"
 +
 +# -Ccontrol-flow-guard: Enable Control Flow Guard, needed for OneBranch's post-build analysis (https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard).
 +# -Ctarget-feature=+crt-static: Statically link the CRT (required to link the spectre-mitigated CRT).

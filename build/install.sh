@@ -107,8 +107,6 @@ strip = true # removes debug symbols
 lto = true # enables link time optimization
 codegen-units = 1 # makes it link in a single progress, where it normally runs in multiple independent workers in parallel. Might make compilation a little slower
 EOF
-
-    cargo login --registry ms-crates-io
 }
 
 override_debug() {
