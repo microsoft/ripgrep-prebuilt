@@ -14,9 +14,9 @@ install_rustup() {
     if [ "${USE_MARINER}" = 'true' ]; then
         return
     fi
-    
+
     curl https://sh.rustup.rs -sSf \
-    | sh -s -- -y --default-toolchain="$RUST_VERSION"
+      | sh -s -- -y --default-toolchain="$RUST_VERSION"
 
     # Linux
     if [ -f /usr/local/cargo/env ]; then
@@ -34,6 +34,10 @@ install_rustup() {
 }
 
 install_targets() {
+    if [ "${USE_MARINER}" = 'true' ]; then
+        return
+    fi
+
     if [[ $(host) != "$TARGET" ]]; then
         rustup target add $TARGET
     fi
@@ -82,7 +86,7 @@ install_linux_dependencies() {
 configure_cargo() {
     local prefix=$(gcc_prefix)
 
-    if [ -n "${prefix}" ] && [ "${USE_MARINER}" = 'true' ]; then
+    if [ -n "${prefix}" ] && [ "${USE_MARINER}" != 'true' ]; then
         local gcc="${prefix}gcc"
 
         # information about the cross compiler

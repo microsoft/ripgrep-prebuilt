@@ -28,7 +28,7 @@ steps:
   - task: DockerInstaller@0
     inputs:
       dockerVersion: '27.0.3'
-  
+
   - task: Bash@3
     displayName: Build
     env:
