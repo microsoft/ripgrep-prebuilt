@@ -21,7 +21,7 @@ index 3b0e4ca..7fd7d06 100644
 --- a/Cross.toml
 +++ b/Cross.toml
 @@ -9,3 +9,8 @@ image = "burntsushi/cross:mips64-unknown-linux-gnuabi64"
-
+ 
  [target.arm-unknown-linux-gnueabihf]
  image = "burntsushi/cross:arm-unknown-linux-gnueabihf"
 +
