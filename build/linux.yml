@@ -3,6 +3,7 @@ parameters:
   rust_version: '1.76.0'
   repo: ''
   tag: ''
+  use_mariner: false
 
 steps:
 - script: |
@@ -16,24 +17,43 @@ steps:
 
 - script: |
     set -ex
-    for patch in $(node -p "require('../config.json').patches.join(' ')"); do
+    for patch in $(node -p "require('../config-linux.json').patches.join(' ')"); do
       git apply --ignore-whitespace --ignore-space-change ../patches/$patch
     done
   workingDirectory: ripgrep
   displayName: Apply patches
   condition: succeeded()
 
-- script: build/install.sh
-  displayName: Install Rust
-  env:
-    RUST_VERSION: ${{ parameters.rust_version }}
-    TARGET: ${{ parameters.target }}
+- ${{ if eq(parameters.use_mariner, true) }}:
+  - task: DockerInstaller@0
+    inputs:
+      dockerVersion: '27.0.3'
 
-- script: ../build/build.sh
-  displayName: Build
-  workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
+  - task: Bash@3
+    displayName: Build
+    env:
+      CURRENTDIR: $(Build.SourcesDirectory)
+      DOCKERCMD: >
+        echo $(pwd) &&
+        apk add --no-cache musl-dev lld file &&
+        ./build/install.sh &&
+        cd ripgrep && ../build/build.sh
+    inputs:
+      targetType: 'inline'
+      script: |
+          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/app --workdir /app --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" mcr.microsoft.com/devcontainers/base:alpine-3.19 /bin/sh -c "${DOCKERCMD}"
+- ${{ else }}:
+  - script: build/install.sh
+    displayName: Install Rust
+    env:
+      RUST_VERSION: ${{ parameters.rust_version }}
+      TARGET: ${{ parameters.target }}
+
+  - script: ../build/build.sh
+    displayName: Build
+    workingDirectory: ripgrep
+    env:
+      TARGET: ${{ parameters.target }}
 
 - script: ../build/package.sh
   displayName: Package

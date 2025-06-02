@@ -18,7 +18,7 @@ main() {
     elif is_s390x; then
         "$CARGO" build --release --target=$TARGET
     elif is_aarch64_musl; then
-        # force jemalloc to allow 16K page sizes for linux musl 
+        # force jemalloc to allow 16K page sizes for linux musl
         # https://github.com/microsoft/ripgrep-prebuilt/issues/26
         JEMALLOC_SYS_WITH_LG_PAGE=16 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     else

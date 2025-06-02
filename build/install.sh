@@ -47,6 +47,11 @@ install_linux_dependencies() {
     if ! is_linux; then
         return
     fi
+    
+    if [ "${USE_MARINER}" = 'true' ]; then
+        return
+    fi
+
     sudo apt-get update
     sudo apt-get install -y musl-tools
 
@@ -82,7 +87,7 @@ configure_cargo() {
         mkdir -p .cargo
 
         # tell cargo which linker to use for cross compilation
-        cat >> .cargo/config <<EOF
+        cat >> .cargo/config.toml <<EOF
 [target.$TARGET]
 linker = "${gcc}"
 EOF
@@ -90,7 +95,7 @@ EOF
     
     override_debug
 
-    cat >> ripgrep/.cargo/config <<EOF
+    cat >> ripgrep/.cargo/config.toml <<EOF
 
 [profile.release] # release flags https://doc.rust-lang.org/cargo/reference/profiles.html#release
 strip = true # removes debug symbols
