@@ -56,14 +56,14 @@ install_linux_dependencies() {
     sudo apt-get install -y musl-tools
 
     if is_arm; then
-        sudo apt-get install -y gcc-arm-linux-gnueabihf
-        sudo apt-get install -y binutils-arm-linux-gnueabihf
-        sudo apt-get install -y libc6-armhf-cross
-        sudo apt-get install -y libc6-dev-armhf-cross
+        sudo apt-get install gcc-arm-linux-gnueabihf
+        sudo apt-get install binutils-arm-linux-gnueabihf
+        sudo apt-get install libc6-armhf-cross
+        sudo apt-get install libc6-dev-armhf-cross
     fi
 
     if is_aarch64; then
-        sudo apt-get install -y gcc-aarch64-linux-gnu
+        sudo apt-get install gcc-aarch64-linux-gnu
     fi
 
     if is_ppc64le; then
@@ -94,11 +94,6 @@ EOF
     fi
     
     override_debug
-
-    cat >> ~/.cargo/config.toml <<EOF
-[registry]
-global-credential-providers = ["cargo:token", "cargo:macos-keychain", "cargo:wincred"]
-EOF
 
     cat >> ripgrep/.cargo/config.toml <<EOF
 
