@@ -70,6 +70,10 @@ install_linux_dependencies() {
         sudo apt-get install -y gcc-powerpc64le-linux-gnu
     fi
 
+    if is_riscv64; then
+        sudo apt-get install -y gcc-riscv64-linux-gnu
+    fi
+
     if is_s390x; then
         sudo apt-get install -y gcc-s390x-linux-gnu
     fi

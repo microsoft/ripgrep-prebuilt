@@ -115,6 +115,14 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: powerpc64le-unknown-linux-gnu
+        - job: riscv64
+          pool:
+            name: 1es-oss-ubuntu-22.04-x64
+            os: linux
+          steps:
+            - template: build/linux.yml@self
+              parameters:
+                target: riscv64gc-unknown-linux-gnu
         - job: s390x
           pool:
             name: 1es-oss-ubuntu-22.04-x64
