@@ -35,10 +35,11 @@ steps:
     configFile: 'ripgrep/.cargo/config.toml'
 
 - powershell: |
-    $env:CFLAGS= "$env:CFLAGS /guard:cf /Qspectre /W3"
+    # Leave out the /sdl flag because it causes errors in pcre2/src/pcre2_jit_compile.c to fail the build.
+    $env:CFLAGS = "$env:CFLAGS /guard:cf /Qspectre /W3"
     cargo build --release --target $env:TARGET --features pcre2
 
-    cargo test --target "$TARGET" --release --verbose --all --features 'pcre2'
+    cargo test --target $env:TARGET --release --verbose --all --features 'pcre2'
 
     pushd ..
     $this_tag=git tag -l --contains HEAD

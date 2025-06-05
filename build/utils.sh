@@ -62,7 +62,7 @@ gcc_prefix() {
             echo aarch64-linux-gnu-
             ;;
         ppc64le)
-            echo  powerpc64le-linux-gnu-
+            echo powerpc64le-linux-gnu-
 	        ;;
         riscv64)
             echo  riscv64-linux-gnu-
@@ -85,15 +85,15 @@ is_musl() {
 
 is_x86() {
     case "$(architecture)" in
-      amd64|i386) return 0 ;;
-      *)          return 1 ;;
+        amd64|i386) return 0 ;;
+        *)          return 1 ;;
     esac
 }
 
 is_x86_64() {
     case "$(architecture)" in
-      amd64) return 0 ;;
-      *)          return 1 ;;
+        amd64) return 0 ;;
+        *)     return 1 ;;
     esac
 }
 
@@ -114,7 +114,7 @@ is_aarch64() {
 is_aarch64_musl() {
     case "$(architecture)" in
         aarch64-musl) return 0 ;;
-        *)     return 1 ;;
+        *)            return 1 ;;
     esac
 }
 
@@ -130,7 +130,7 @@ is_ppc64le() {
         ppc64le) return 0 ;;
         *)       return 1 ;;
     esac
-}	
+}
 
 is_riscv64() {
     case "$(architecture)" in
@@ -156,15 +156,10 @@ is_linux() {
 is_osx() {
     case "$AGENT_OS" in
         Darwin) return 0 ;;
-        *)   return 1 ;;
+        *)      return 1 ;;
     esac
 }
 
 builder() {
-    if is_musl && is_aarch64_musl; then
-        cargo install cross --version 0.2.1
-        echo "cross"
-    else
-        echo "cargo"
-    fi
+    echo "cargo"
 }
