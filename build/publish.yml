@@ -7,7 +7,6 @@ steps:
     target: '$(Build.SourceVersion)'
     tagSource: 'userSpecifiedTag'
     tag: '$(Build.SourceBranchName)'
-    assets: '$(Build.ArtifactStagingDirectory)/**/ripgrep--*.*'
+    assets: '$(Build.ArtifactStagingDirectory)/**/ripgrep-*.*'
     assetUploadMode: 'replace'
     addChangeLog: true
-  condition: startsWith(variables['Build.SourceBranch'], 'refs/tags/v')
