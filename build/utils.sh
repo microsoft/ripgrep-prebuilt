@@ -65,7 +65,7 @@ gcc_prefix() {
             echo powerpc64le-linux-gnu-
 	        ;;
         riscv64)
-            echo  riscv64-linux-gnu-
+            echo riscv64-linux-gnu-
 	        ;;
         s390x)
             echo s390x-linux-gnu-
