@@ -169,6 +169,9 @@ extends:
               artifactName: ripgrep-$(Build.SourceBranchName)-powerpc64le-unknown-linux-gnu.tar.gz
               targetPath: $(Build.ArtifactStagingDirectory)/ripgrep-$(Build.SourceBranchName)-powerpc64le-unknown-linux-gnu.tar.gz
             - input: pipelineArtifact
+              artifactName: ripgrep-$(Build.SourceBranchName)-riscv64gc-unknown-linux-gnu.tar.gz
+              targetPath: $(Build.ArtifactStagingDirectory)/ripgrep-$(Build.SourceBranchName)-riscv64gc-unknown-linux-gnu.tar.gz
+            - input: pipelineArtifact
               artifactName: ripgrep-$(Build.SourceBranchName)-s390x-unknown-linux-gnu.tar.gz
               targetPath: $(Build.ArtifactStagingDirectory)/ripgrep-$(Build.SourceBranchName)-s390x-unknown-linux-gnu.tar.gz
             - input: pipelineArtifact
