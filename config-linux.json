@@ -5,6 +5,7 @@
         "0001-feat-pass-env-for-aarch64-unknown-linux-musl-via-cross.patch",
         "0002-msvc-spectre-libs.patch",
         "0004-musl-rust-flags.patch",
-        "0005-pcre2-bump.patch"
+        "0005-pcre2-bump.patch",
+        "0006-fix-cg-1.patch"
     ]
 }
