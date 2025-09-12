@@ -13,7 +13,7 @@ index 9e54301..c1a7cac 100644
 +[target.'cfg(target_os = "windows")'.source.crates-io]
 +replace-with = 'ms-crates-io'
 +
-+[target.'cfg(target_os = "windows")'.registries.ms-crates-io]
++[registries.ms-crates-io]
 +index = "sparse+https://pkgs.dev.azure.com/monacotools/Monaco/_packaging/ripgrep-prebuilt-crates/Cargo/index/"
 +
 +# -Ccontrol-flow-guard: Enable Control Flow Guard, needed for OneBranch's post-build analysis (https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard).
