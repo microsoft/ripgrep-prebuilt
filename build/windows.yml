@@ -26,7 +26,7 @@ steps:
 - task: RustInstaller@1
   inputs:
     rustVersion: ${{ parameters.rust_version }}
-    toolchainFeed: https://pkgs.dev.azure.com/vscode/_packaging/RustTools/nuget/v3/index.json
+    toolchainFeed: https://pkgs.dev.azure.com/monacotools/Monaco/_packaging/RustTools/nuget/v3/index.json
     additionalTargets: ${{ parameters.target }}
   displayName: Install Rust toolchain
 

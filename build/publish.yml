@@ -1,7 +1,7 @@
 steps:
 - task: GitHubRelease@1
   inputs:
-    gitHubConnection: github.com_oauth
+    gitHubConnection: oauth
     repositoryName: '$(Build.Repository.Name)'
     action: 'edit'
     target: '$(Build.SourceVersion)'

@@ -17,7 +17,7 @@ extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
     sdl:
-      sourceAnalysisPool: 1es-oss-windows-2022-x64
+      sourceAnalysisPool: 1es-windows-2022-x64
       binskim:
         analyzeTargetGlob: '$(Build.SourcesDirectory)/ripgrep/target/**/release/rg.exe'
       tsa:
@@ -28,7 +28,7 @@ extends:
         jobs:
         - job: linux_64
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -36,7 +36,7 @@ extends:
                 target: x86_64-unknown-linux-musl
         - job: linux_32
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -44,7 +44,7 @@ extends:
                 target: i686-unknown-linux-musl
         - job: linux_arm
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -52,7 +52,7 @@ extends:
                 target: arm-unknown-linux-gnueabihf
         - job: linux_aarch64
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -60,7 +60,7 @@ extends:
                 target: aarch64-unknown-linux-gnu
         - job: linux_aarch64_musl
           pool:
-            name: 1es-oss-mariner-2.0-arm64
+            name: 1es-mariner-2.0-arm64
             os: linux
             hostArchitecture: Arm64
           steps:
@@ -88,28 +88,28 @@ extends:
                 target: aarch64-apple-darwin
         - job: win_64
           pool:
-            name: 1es-oss-windows-2022-x64
+            name: 1es-windows-2022-x64
           steps:
             - template: build/windows.yml@self
               parameters:
                 target: x86_64-pc-windows-msvc
         - job: win_32
           pool:
-            name: 1es-oss-windows-2022-x64
+            name: 1es-windows-2022-x64
           steps:
             - template: build/windows.yml@self
               parameters:
                 target: i686-pc-windows-msvc
         - job: win_arm64
           pool:
-            name: 1es-oss-windows-2022-x64
+            name: 1es-windows-2022-x64
           steps:
             - template: build/windows.yml@self
               parameters:
                 target: aarch64-pc-windows-msvc
         - job: ppc64le
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -117,7 +117,7 @@ extends:
                 target: powerpc64le-unknown-linux-gnu
         - job: riscv64
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -125,7 +125,7 @@ extends:
                 target: riscv64gc-unknown-linux-gnu
         - job: s390x
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           steps:
             - template: build/linux.yml@self
@@ -138,7 +138,7 @@ extends:
         jobs:
         - job: publish
           pool:
-            name: 1es-oss-ubuntu-22.04-x64
+            name: 1es-ubuntu-22.04-x64
             os: linux
           templateContext:
             type: releaseJob
