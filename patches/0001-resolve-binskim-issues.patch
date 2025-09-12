@@ -1,0 +1,80 @@
+diff --git a/.cargo/config.toml b/.cargo/config.toml
+index 9e54301..c1a7cac 100644
+--- a/.cargo/config.toml
++++ b/.cargo/config.toml
+@@ -19,3 +19,24 @@ rustflags = [
+   "-C", "target-feature=+crt-static",
+   "-C", "link-self-contained=yes",
+ ]
++
++[target.aarch64-unknown-linux-musl]
++rustflags = ["-Clink-arg=-fuse-ld=lld"]
++
++[target.'cfg(target_os = "windows")'.source.crates-io]
++replace-with = 'ms-crates-io'
++
++[target.'cfg(target_os = "windows")'.registries.ms-crates-io]
++index = "sparse+https://pkgs.dev.azure.com/monacotools/Monaco/_packaging/ripgrep-prebuilt-crates/Cargo/index/"
++
++# -Ccontrol-flow-guard: Enable Control Flow Guard, needed for OneBranch's post-build analysis (https://learn.microsoft.com/en-us/cpp/build/reference/guard-enable-control-flow-guard).
++# -Ctarget-feature=+crt-static: Statically link the CRT (required to link the spectre-mitigated CRT).
++[target.'cfg(target_os = "windows")']
++rustflags = [
++    "-Ccontrol-flow-guard",
++    "-Ctarget-feature=+crt-static",
++]
++
++# -Clink-args=/DYNAMICBASE /CETCOMPAT: Enable "shadow stack" (https://learn.microsoft.com/en-us/cpp/build/reference/cetcompat)
++[target.'cfg(all(target_os = "windows", any(target_arch = "i686", target_arch = "x86_64", target_arch = "x86")))']
++rustflags = ["-Clink-args=/DYNAMICBASE /CETCOMPAT"]
+diff --git a/Cargo.lock b/Cargo.lock
+index 5ca69a0..4eca4bd 100644
+--- a/Cargo.lock
++++ b/Cargo.lock
+@@ -284,6 +284,15 @@ dependencies = [
+  "libc",
+ ]
+ 
++[[package]]
++name = "msvc_spectre_libs"
++version = "0.1.3"
++source = "registry+https://github.com/rust-lang/crates.io-index"
++checksum = "29e871a9861f3664f18b7e04e9301d4edd55090c2dadb4b1c602e26ab32b1f5b"
++dependencies = [
++ "cc",
++]
++
+ [[package]]
+ name = "pcre2"
+ version = "0.2.9"
+@@ -370,6 +379,7 @@ dependencies = [
+  "jemallocator",
+  "lexopt",
+  "log",
++ "msvc_spectre_libs",
+  "serde",
+  "serde_derive",
+  "serde_json",
+diff --git a/Cargo.toml b/Cargo.toml
+index 2ec69c9..94601ed 100644
+--- a/Cargo.toml
++++ b/Cargo.toml
+@@ -59,6 +59,9 @@ serde_json = "1.0.23"
+ termcolor = "1.1.0"
+ textwrap = { version = "0.16.0", default-features = false }
+ 
++[target.'cfg(target_os = "windows")'.dependencies]
++msvc_spectre_libs = { version = "0.1.1", features = ["error"] }
++
+ [target.'cfg(all(target_env = "musl", target_pointer_width = "64"))'.dependencies.jemallocator]
+ version = "0.5.0"
+ 
+@@ -118,3 +121,8 @@ ripgrep (rg) recursively searches your current directory for a regex pattern.
+ By default, ripgrep will respect your .gitignore and automatically skip hidden
+ files/directories and binary files.
+ """
++
++[target.aarch64-unknown-linux-musl.env]
++passthrough = [
++  "JEMALLOC_SYS_WITH_LG_PAGE",
++]
