@@ -2,7 +2,7 @@
 
 parameters:
   target: ''
-  rust_version: 'ms-1.85'
+  rust_version: 'ms-1.88'
 
 steps:
 - powershell: |
