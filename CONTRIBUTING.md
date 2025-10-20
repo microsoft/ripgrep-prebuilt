@@ -17,7 +17,7 @@ This section is for ripgrep-prebuilt repository maintainers.
 When adjusting the version of ripgrep referenced in config.json, you may have to refresh the patch file so that it can be cleanly applied to the new version.
 One way to refresh the patch file is the following:
 
-1. Check out the upstream repository indicated by `ripgrepRepo`, which is currently `BurntSushi/ripgrep`, and checkout the tag indicated by `ripgrepTag`, such as `14.1.1`.
+1. Check out the upstream repository indicated by `ripgrepRepo`, which is currently `BurntSushi/ripgrep`, and checkout the tag indicated by `ripgrepTag`, such as `15.0.0`.
 2. Manually reapply the `Cargo.toml` changes within the patch file to the upstream repository.
 3. Run `cargo build` to update the upstream repository's `Cargo.lock` file.
 4. Manually reapply the `.cargo/config.toml` changes within the patch file to the upstream repository.
