@@ -1,6 +1,6 @@
 {
     "ripgrepRepo": "BurntSushi/ripgrep",
-    "ripgrepTag": "14.1.1",
+    "ripgrepTag": "15.0.0",
     "patches": [
         "0001-resolve-binskim-issues.patch"
     ]
