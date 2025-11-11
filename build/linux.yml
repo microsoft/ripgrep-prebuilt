@@ -6,6 +6,12 @@ parameters:
   use_mariner: false
 
 steps:
+- ${{ if eq(parameters.use_mariner, true) }}:
+  - task: UseNode@1
+    inputs:
+      version: '22.x'
+    displayName: Use Node 22
+
 - script: |
     set -ex
     REPO=`[ "${{ parameters.repo }}" ] &&  echo ${{ parameters.repo }} || echo $(node -p "require('./config.json').ripgrepRepo")`
