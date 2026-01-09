@@ -62,15 +62,11 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
-- pwsh: |
-    Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)" -Recurse -Name "*.pdb"
-  displayName: 'List PDB files'
-
 - task: PublishSymbols@2
   displayName: 'Publish Symbols'
   inputs:
-    SymbolsFolder: $(Build.ArtifactStagingDirectory)/$(Name)
-    SearchPattern: "**/*.pdb"
+    SymbolsFolder: ripgrep/target
+    SearchPattern: "**/release/**/*.pdb"
     IndexSources: false
     PublishSymbols: true
     SymbolServerType: 'TeamServices'
