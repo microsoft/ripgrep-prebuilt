@@ -65,7 +65,7 @@ steps:
 - task: PublishSymbols@2
   displayName: 'Publish Symbols'
   inputs:
-    SymbolsFolder: "ripgrep/target/${{ parameters.target }}/release"
+    SymbolsFolder: "$(Build.SourcesDirectory)\\ripgrep\\target\\${{ parameters.target }}\\release"
     SearchPattern: 'rg.pdb'
     IndexSources: false
     PublishSymbols: true
