@@ -62,6 +62,16 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
+- task: PublishSymbols@2
+  displayName: 'Publish Symbols'
+  inputs:
+    SymbolsFolder: "$(Build.SourcesDirectory)\\ripgrep\\target\\${{ parameters.target }}\\release"
+    SearchPattern: 'rg.pdb'
+    IndexSources: false
+    PublishSymbols: true
+    SymbolServerType: 'TeamServices'
+    SymbolsProduct: 'ripgrep-prebuilt'
+
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
