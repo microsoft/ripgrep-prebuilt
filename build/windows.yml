@@ -62,15 +62,19 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
-- task: PublishSymbols@2
-  displayName: 'Publish Symbols'
-  inputs:
-    SymbolsFolder: ripgrep/target
-    SearchPattern: "**/release/**/*.pdb"
-    IndexSources: false
-    PublishSymbols: true
-    SymbolServerType: 'TeamServices'
-    SymbolsProduct: 'ripgrep-prebuilt'
+- pwsh: |
+    Get-ChildItem -Path ripgrep/target -Recurse -Filter *.pdb
+  displayName: 'List Symbols'
+
+# - task: PublishSymbols@2
+#   displayName: 'Publish Symbols'
+#   inputs:
+#     SymbolsFolder: ripgrep/target
+#     SearchPattern: "**/*.pdb"
+#     IndexSources: false
+#     PublishSymbols: true
+#     SymbolServerType: 'TeamServices'
+#     SymbolsProduct: 'ripgrep-prebuilt'
 
 - task: 1ES.PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
