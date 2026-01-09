@@ -62,6 +62,10 @@ steps:
     TARGET: ${{ parameters.target }}
   condition: succeeded()
 
+- pwsh: |
+    Get-ChildItem -Path "$(Build.ArtifactStagingDirectory)" -Recurse -Name "*.pdb"
+  displayName: 'List PDB files'
+
 - task: PublishSymbols@2
   displayName: 'Publish Symbols'
   inputs:
