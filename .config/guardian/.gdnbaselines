@@ -1,0 +1,60 @@
+{
+  "properties": {
+    "helpUri": "https://eng.ms/docs/microsoft-security/security/azure-security/cloudai-security-fundamentals-engineering/security-integration/guardian-wiki/microsoft-guardian/general/baselines"
+  },
+  "version": "1.0.0",
+  "baselines": {
+    "default": {
+      "name": "default",
+      "createdDate": "2026-01-29 08:55:21Z",
+      "lastUpdatedDate": "2026-01-29 08:55:21Z"
+    }
+  },
+  "results": {
+    "093060f696667806e6de31d92fff852edbc395ddf48fb174d97893fc23f7e214": {
+      "signature": "093060f696667806e6de31d92fff852edbc395ddf48fb174d97893fc23f7e214",
+      "alternativeSignatures": [
+        "48e8600cc4de8711a7dc3f98b2eba16f88fc0bdc8bbb88dd2f343124d8f8aa46"
+      ],
+      "target": "ripgrep/target/x86_64-pc-windows-msvc/release/rg.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-01-29 08:55:21Z",
+      "expirationDate": "2026-07-18 09:05:55Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-01-29 09:05:55Z"
+    },
+    "f34f020908a715cd9a37a82bb2deed92af7b3b335ef2a36e3e7b246604ad166a": {
+      "signature": "f34f020908a715cd9a37a82bb2deed92af7b3b335ef2a36e3e7b246604ad166a",
+      "alternativeSignatures": [
+        "112f2d7c8635547cfc10cd2ed33960216e6cce1c3154d9c8ce0b4ad33fdd3135"
+      ],
+      "target": "ripgrep/target/i686-pc-windows-msvc/release/rg.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-01-29 08:55:40Z",
+      "expirationDate": "2026-07-18 09:05:55Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-01-29 09:05:55Z"
+    },
+    "8076ddb7585aa398a37167ad0e1f78c25cb83acacc7997bba3ae29034ebd0bf6": {
+      "signature": "8076ddb7585aa398a37167ad0e1f78c25cb83acacc7997bba3ae29034ebd0bf6",
+      "alternativeSignatures": [
+        "431ef2b67d6375b53fa004b8c09fb72b88d85789b506aa929d5d935906d48cf6"
+      ],
+      "target": "ripgrep/target/aarch64-pc-windows-msvc/release/rg.exe",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-01-29 08:55:55Z",
+      "expirationDate": "2026-07-18 09:05:55Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-01-29 09:05:55Z"
+    }
+  }
+}
