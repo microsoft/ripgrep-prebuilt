@@ -60,6 +60,16 @@ steps:
     env:
       TARGET: ${{ parameters.target }}
 
+- ${{ if eq(parameters.target, 'aarch64-unknown-linux-musl') }}:
+  - script: |
+      set -ex
+      defs_file="$(find "target/${{ parameters.target }}/release/build" -path '*/out/build/include/jemalloc/internal/jemalloc_internal_defs.h' -print -quit)"
+      test -n "$defs_file"
+      grep -n 'LG_PAGE' "$defs_file" || true
+      grep -Eq '^#define[[:space:]]+LG_PAGE[[:space:]]+16([[:space:]]|$)' "$defs_file"
+    displayName: Verify jemalloc LG_PAGE (aarch64 musl)
+    workingDirectory: ripgrep
+
 - script: ../build/package.sh
   displayName: Package
   workingDirectory: ripgrep
