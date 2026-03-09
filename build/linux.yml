@@ -4,6 +4,9 @@ parameters:
   repo: ''
   tag: ''
   use_mariner: false
+  use_qemu: false
+  qemu_page_size: '16384'
+  publish_artifact: true
 
 steps:
 - task: UseNode@1
@@ -54,11 +57,20 @@ steps:
       RUST_VERSION: ${{ parameters.rust_version }}
       TARGET: ${{ parameters.target }}
 
+  - ${{ if eq(parameters.use_qemu, true) }}:
+    - script: |
+        set -ex
+        sudo apt-get update
+        sudo apt-get install -y qemu-user
+      displayName: Install QEMU user-mode emulation
+
   - script: ../build/build.sh
     displayName: Build
     workingDirectory: ripgrep
     env:
       TARGET: ${{ parameters.target }}
+      ${{ if eq(parameters.use_qemu, true) }}:
+        CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER: qemu-aarch64 -p ${{ parameters.qemu_page_size }}
 
 - ${{ if eq(parameters.target, 'aarch64-unknown-linux-musl') }}:
   - script: |
@@ -70,20 +82,21 @@ steps:
     displayName: Verify jemalloc LG_PAGE (aarch64 musl)
     workingDirectory: ripgrep
 
-- script: ../build/package.sh
-  displayName: Package
-  workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
-    OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: succeeded()
+- ${{ if eq(parameters.publish_artifact, true) }}:
+  - script: ../build/package.sh
+    displayName: Package
+    workingDirectory: ripgrep
+    env:
+      TARGET: ${{ parameters.target }}
+      OUT_DIR: $(Build.ArtifactStagingDirectory)
+    condition: succeeded()
 
-- task: 1ES.PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
-    artifactName: $(Name)
-    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
-    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep
-    sbomPackageName: "ripgrep-prebuilt (${{ parameters.target }})"
-  condition: succeeded()
+  - task: 1ES.PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact'
+    inputs:
+      targetPath: $(Build.ArtifactStagingDirectory)
+      artifactName: $(Name)
+      sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
+      sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep
+      sbomPackageName: "ripgrep-prebuilt (${{ parameters.target }})"
+    condition: succeeded()

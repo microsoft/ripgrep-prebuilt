@@ -68,6 +68,30 @@ extends:
               parameters:
                 target: aarch64-unknown-linux-musl
                 use_mariner: true
+        - job: linux_aarch64_musl_qemu_16k
+          pool:
+            name: 1es-azure-linux-3-arm64
+            os: linux
+            hostArchitecture: Arm64
+          steps:
+            - template: build/linux.yml@self
+              parameters:
+                target: aarch64-unknown-linux-musl
+                use_qemu: true
+                qemu_page_size: '16384'
+                publish_artifact: false
+        - job: linux_aarch64_musl_qemu_64k
+          pool:
+            name: 1es-azure-linux-3-arm64
+            os: linux
+            hostArchitecture: Arm64
+          steps:
+            - template: build/linux.yml@self
+              parameters:
+                target: aarch64-unknown-linux-musl
+                use_qemu: true
+                qemu_page_size: '65536'
+                publish_artifact: false
         - job: macOS
           pool:
             name: Azure Pipelines
