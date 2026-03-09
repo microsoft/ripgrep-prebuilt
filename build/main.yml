@@ -77,6 +77,7 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: aarch64-unknown-linux-musl
+                use_mariner: true
                 use_qemu: true
                 qemu_page_size: '16384'
                 publish_artifact: false
@@ -89,6 +90,7 @@ extends:
             - template: build/linux.yml@self
               parameters:
                 target: aarch64-unknown-linux-musl
+                use_mariner: true
                 use_qemu: true
                 qemu_page_size: '65536'
                 publish_artifact: false
