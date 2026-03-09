@@ -4,6 +4,9 @@ parameters:
   repo: ''
   tag: ''
   use_mariner: false
+  use_qemu: false
+  qemu_page_size: '16384'
+  publish_artifact: true
 
 steps:
 - task: UseNode@1
@@ -41,12 +44,21 @@ steps:
       DOCKERCMD: >
         echo $(pwd) &&
         apk add --no-cache musl-dev lld file &&
+        if [ "${USE_QEMU}" = "true" ]; then
+          apk add --no-cache qemu-user || apk add --no-cache qemu-user-static || apk add --no-cache qemu-aarch64;
+          QEMU_BIN="$(command -v qemu-aarch64 || true)";
+          if [ -z "${QEMU_BIN}" ]; then
+            QEMU_BIN="$(command -v qemu-aarch64-static || true)";
+          fi;
+          test -n "${QEMU_BIN}";
+          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER="${QEMU_BIN} -p ${QEMU_PAGE_SIZE}";
+        fi &&
         ./build/install.sh &&
         cd ripgrep && ../build/build.sh
     inputs:
       targetType: 'inline'
       script: |
-          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/app --workdir /app --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" mcr.microsoft.com/devcontainers/base:alpine-3.19 /bin/sh -c "${DOCKERCMD}"
+          docker run --pull always --privileged --rm --volume "${CURRENTDIR}":/app --workdir /app --env RUST_VERSION="${{ parameters.rust_version }}" --env USE_MARINER="${{ parameters.use_mariner }}" --env TARGET="${{ parameters.target }}" --env OUT_DIR="$(Build.ArtifactStagingDirectory)" --env USE_QEMU="${{ parameters.use_qemu }}" --env QEMU_PAGE_SIZE="${{ parameters.qemu_page_size }}" mcr.microsoft.com/devcontainers/base:alpine-3.19 /bin/sh -c "${DOCKERCMD}"
 - ${{ else }}:
   - script: build/install.sh
     displayName: Install Rust
@@ -70,20 +82,21 @@ steps:
     displayName: Verify jemalloc LG_PAGE (aarch64 musl)
     workingDirectory: ripgrep
 
-- script: ../build/package.sh
-  displayName: Package
-  workingDirectory: ripgrep
-  env:
-    TARGET: ${{ parameters.target }}
-    OUT_DIR: $(Build.ArtifactStagingDirectory)
-  condition: succeeded()
+- ${{ if eq(parameters.publish_artifact, true) }}:
+  - script: ../build/package.sh
+    displayName: Package
+    workingDirectory: ripgrep
+    env:
+      TARGET: ${{ parameters.target }}
+      OUT_DIR: $(Build.ArtifactStagingDirectory)
+    condition: succeeded()
 
-- task: 1ES.PublishPipelineArtifact@1
-  displayName: 'Publish Pipeline Artifact'
-  inputs:
-    targetPath: $(Build.ArtifactStagingDirectory)
-    artifactName: $(Name)
-    sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
-    sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep
-    sbomPackageName: "ripgrep-prebuilt (${{ parameters.target }})"
-  condition: succeeded()
+  - task: 1ES.PublishPipelineArtifact@1
+    displayName: 'Publish Pipeline Artifact'
+    inputs:
+      targetPath: $(Build.ArtifactStagingDirectory)
+      artifactName: $(Name)
+      sbomBuildDropPath: $(Build.ArtifactStagingDirectory)
+      sbomBuildComponentPath: $(Build.SourcesDirectory)/ripgrep
+      sbomPackageName: "ripgrep-prebuilt (${{ parameters.target }})"
+    condition: succeeded()

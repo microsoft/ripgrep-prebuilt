@@ -26,7 +26,7 @@ main() {
     elif is_s390x || is_riscv64; then
         "$CARGO" build --release --target=$TARGET
     elif is_aarch64_musl; then
-        "$CARGO" build --target "$TARGET" --release --features 'pcre2'
+        PCRE2_SYS_STATIC=1 "$CARGO" build --target "$TARGET" --release --features 'pcre2'
     else
         # Technically, MUSL builds will force PCRE2 to get statically compiled,
         # but we also want PCRE2 statically build for macOS binaries.
