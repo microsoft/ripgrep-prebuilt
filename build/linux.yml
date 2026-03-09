@@ -43,9 +43,15 @@ steps:
       CURRENTDIR: $(Build.SourcesDirectory)
       DOCKERCMD: >
         echo $(pwd) &&
-        apk add --no-cache musl-dev lld file qemu-user &&
+        apk add --no-cache musl-dev lld file &&
         if [ "${USE_QEMU}" = "true" ]; then
-          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER="qemu-aarch64 -p ${QEMU_PAGE_SIZE}";
+          apk add --no-cache qemu-user || apk add --no-cache qemu-user-static || apk add --no-cache qemu-aarch64;
+          QEMU_BIN="$(command -v qemu-aarch64 || true)";
+          if [ -z "${QEMU_BIN}" ]; then
+            QEMU_BIN="$(command -v qemu-aarch64-static || true)";
+          fi;
+          test -n "${QEMU_BIN}";
+          export CARGO_TARGET_AARCH64_UNKNOWN_LINUX_MUSL_RUNNER="${QEMU_BIN} -p ${QEMU_PAGE_SIZE}";
         fi &&
         ./build/install.sh &&
         cd ripgrep && ../build/build.sh
